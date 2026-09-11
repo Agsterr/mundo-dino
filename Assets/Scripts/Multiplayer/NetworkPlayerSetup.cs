@@ -1,0 +1,97 @@
+using OpenWorldDinoSurvival.Player;
+using OpenWorldDinoSurvival.UI;
+using Unity.Netcode;
+using UnityEngine;
+using UnityEngine.InputSystem;
+
+namespace OpenWorldDinoSurvival.Multiplayer
+{
+    /// <summary>
+    /// Habilita input/câmera só para o dono e define spawn por jogador.
+    /// </summary>
+    [RequireComponent(typeof(NetworkObject))]
+    public class NetworkPlayerSetup : NetworkBehaviour
+    {
+        [SerializeField] private Vector3 firstPlayerSpawn = new Vector3(0f, 1f, 0f);
+        [SerializeField] private Vector3 secondPlayerSpawn = new Vector3(6f, 1f, 0f);
+
+        [Header("Componentes do dono")]
+        [SerializeField] private PlayerInputController inputController;
+        [SerializeField] private PlayerMovement movement;
+        [SerializeField] private PlayerWeaponController weaponController;
+        [SerializeField] private PlayerInput playerInput;
+        [SerializeField] private Camera playerCamera;
+        [SerializeField] private AudioListener audioListener;
+        [SerializeField] private ThirdPersonCamera thirdPersonCamera;
+        [SerializeField] private WeaponHUD weaponHud;
+
+        private void Reset()
+        {
+            inputController = GetComponent<PlayerInputController>();
+            movement = GetComponent<PlayerMovement>();
+            weaponController = GetComponent<PlayerWeaponController>();
+            playerInput = GetComponent<PlayerInput>();
+            playerCamera = GetComponentInChildren<Camera>();
+            audioListener = GetComponentInChildren<AudioListener>();
+            thirdPersonCamera = GetComponentInChildren<ThirdPersonCamera>();
+            weaponHud = GetComponent<WeaponHUD>();
+        }
+
+        public override void OnNetworkSpawn()
+        {
+            bool isOwner = IsOwner;
+
+            if (inputController != null)
+            {
+                inputController.enabled = isOwner;
+            }
+
+            if (movement != null)
+            {
+                movement.enabled = isOwner;
+            }
+
+            if (weaponController != null)
+            {
+                weaponController.enabled = isOwner;
+            }
+
+            if (playerInput != null)
+            {
+                playerInput.enabled = isOwner;
+            }
+
+            if (playerCamera != null)
+            {
+                playerCamera.enabled = isOwner;
+            }
+
+            if (audioListener != null)
+            {
+                audioListener.enabled = isOwner;
+            }
+
+            if (thirdPersonCamera != null)
+            {
+                thirdPersonCamera.enabled = isOwner;
+            }
+
+            if (weaponHud != null)
+            {
+                weaponHud.enabled = isOwner;
+            }
+
+            if (isOwner)
+            {
+                Cursor.lockState = CursorLockMode.Locked;
+                Cursor.visible = false;
+            }
+
+            if (IsServer)
+            {
+                Vector3 spawn = OwnerClientId == 0 ? firstPlayerSpawn : secondPlayerSpawn;
+                transform.position = spawn;
+            }
+        }
+    }
+}
