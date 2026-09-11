@@ -26,6 +26,11 @@ GameObject:
   - component: {fileID: 100017}
   - component: {fileID: 100018}
   - component: {fileID: 100019}
+  - component: {fileID: 100020}
+  - component: {fileID: 100021}
+  - component: {fileID: 100022}
+  - component: {fileID: 100023}
+  - component: {fileID: 100024}
   m_Layer: 0
   m_Name: NetworkPlayer
   m_TagString: Player
@@ -218,6 +223,42 @@ MonoBehaviour:
         m_CallState: 2
     m_ActionId: e1f2a3b4-c5d6-7890-4567-901234567891
     m_ActionName: Player/CraftMenu
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 100006}
+        m_TargetAssemblyTypeName: OpenWorldDinoSurvival.Player.PlayerInputController, Assembly-CSharp
+        m_MethodName: OnChat
+        m_Mode: 0
+        m_CallState: 2
+    m_ActionId: f2a3b4c5-d6e7-8901-5678-012345678902
+    m_ActionName: Player/Chat
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 100006}
+        m_TargetAssemblyTypeName: OpenWorldDinoSurvival.Player.PlayerInputController, Assembly-CSharp
+        m_MethodName: OnSubmitChat
+        m_Mode: 0
+        m_CallState: 2
+    m_ActionId: a3b4c5d6-e7f8-9012-6789-123456789013
+    m_ActionName: Player/SubmitChat
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 100006}
+        m_TargetAssemblyTypeName: OpenWorldDinoSurvival.Player.PlayerInputController, Assembly-CSharp
+        m_MethodName: OnVoiceCall
+        m_Mode: 0
+        m_CallState: 2
+    m_ActionId: b4c5d6e7-f8a9-0123-7890-234567890124
+    m_ActionName: Player/VoiceCall
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 100006}
+        m_TargetAssemblyTypeName: OpenWorldDinoSurvival.Player.PlayerInputController, Assembly-CSharp
+        m_MethodName: OnPushToTalk
+        m_Mode: 0
+        m_CallState: 2
+    m_ActionId: c5d6e7f8-a9b0-1234-8901-345678901235
+    m_ActionName: Player/PushToTalk
   m_DefaultActionMap: Player
 --- !u!114 &100010
 MonoBehaviour:
@@ -260,6 +301,8 @@ MonoBehaviour:
   weaponHud: {fileID: 100014}
   craftingHud: {fileID: 100019}
   interactor: {fileID: 100018}
+  chatHud: {fileID: 100021}
+  voiceCallHud: {fileID: 100024}
 --- !u!114 &100013
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -303,6 +346,34 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f60718293a4b5c6d7e8f091011121314, type: 3}
   networkInventory: {fileID: 100016}
   interactor: {fileID: 100018}
+--- !u!114 &100020
+MonoBehaviour:
+  m_GameObject: {fileID: 100000}
+  m_Enabled: 1
+  m_Script: {fileID: 11500000, guid: f80718293a4b5c6d7e8f091011121702, type: 3}
+--- !u!114 &100021
+MonoBehaviour:
+  m_GameObject: {fileID: 100000}
+  m_Enabled: 1
+  m_Script: {fileID: 11500000, guid: f80718293a4b5c6d7e8f091011121703, type: 3}
+  playerChat: {fileID: 100020}
+--- !u!114 &100022
+MonoBehaviour:
+  m_GameObject: {fileID: 100000}
+  m_Enabled: 1
+  m_Script: {fileID: 11500000, guid: f80718293a4b5c6d7e8f091011121705, type: 3}
+--- !u!114 &100023
+MonoBehaviour:
+  m_GameObject: {fileID: 100000}
+  m_Enabled: 1
+  m_Script: {fileID: 11500000, guid: f80718293a4b5c6d7e8f091011121706, type: 3}
+--- !u!114 &100024
+MonoBehaviour:
+  m_GameObject: {fileID: 100000}
+  m_Enabled: 1
+  m_Script: {fileID: 11500000, guid: f80718293a4b5c6d7e8f091011121707, type: 3}
+  playerVoice: {fileID: 100022}
+  transmitter: {fileID: 100023}
 --- !u!1 &200000
 GameObject:
   m_ObjectHideFlags: 0

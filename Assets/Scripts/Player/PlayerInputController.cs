@@ -1,4 +1,6 @@
 using OpenWorldDinoSurvival.Inventory;
+using OpenWorldDinoSurvival.Multiplayer.Chat;
+using OpenWorldDinoSurvival.Multiplayer.Voice;
 using OpenWorldDinoSurvival.UI;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -15,6 +17,8 @@ namespace OpenWorldDinoSurvival.Player
         [SerializeField] private PlayerWeaponController weaponController;
         [SerializeField] private PlayerInteractor interactor;
         [SerializeField] private CraftingHUD craftingHud;
+        [SerializeField] private ChatHUD chatHud;
+        [SerializeField] private VoiceCallHUD voiceCallHud;
 
         private void Reset()
         {
@@ -23,12 +27,16 @@ namespace OpenWorldDinoSurvival.Player
             weaponController = GetComponent<PlayerWeaponController>();
             interactor = GetComponent<PlayerInteractor>();
             craftingHud = GetComponent<CraftingHUD>();
+            chatHud = GetComponent<ChatHUD>();
+            voiceCallHud = GetComponent<VoiceCallHUD>();
         }
 
         private void Awake()
         {
             interactor ??= GetComponent<PlayerInteractor>();
             craftingHud ??= GetComponent<CraftingHUD>();
+            chatHud ??= GetComponent<ChatHUD>();
+            voiceCallHud ??= GetComponent<VoiceCallHUD>();
         }
 
         public void OnMove(InputAction.CallbackContext context) => movement.OnMove(context);
@@ -53,6 +61,51 @@ namespace OpenWorldDinoSurvival.Player
             if (context.performed)
             {
                 craftingHud?.ToggleMenu();
+            }
+        }
+
+        public void OnChat(InputAction.CallbackContext context)
+        {
+            if (!context.performed || chatHud == null)
+            {
+                return;
+            }
+
+            chatHud.ToggleChatFocus();
+        }
+
+        public void OnSubmitChat(InputAction.CallbackContext context)
+        {
+            if (!context.performed || chatHud == null)
+            {
+                return;
+            }
+
+            chatHud.SendCurrentInput();
+        }
+
+        public void OnVoiceCall(InputAction.CallbackContext context)
+        {
+            if (context.performed)
+            {
+                voiceCallHud?.ToggleCallToDefaultTarget();
+            }
+        }
+
+        public void OnPushToTalk(InputAction.CallbackContext context)
+        {
+            if (voiceCallHud == null)
+            {
+                return;
+            }
+
+            if (context.started)
+            {
+                voiceCallHud.SetPushToTalk(true);
+            }
+            else if (context.canceled)
+            {
+                voiceCallHud.SetPushToTalk(false);
             }
         }
     }

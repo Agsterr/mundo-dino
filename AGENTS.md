@@ -8,7 +8,7 @@ Desenvolver em **pequenas entregas jogáveis**. Nunca implementar sistemas futur
 
 ## Milestone ativa
 
-**Milestone 4 + Crafting** — Multiplayer PvP + coleta/crafting de armas e armaduras.
+**Milestone 4 + Crafting + Comunicação** — Multiplayer, crafting, chat global/privado e chamadas de voz PTT.
 
 Próximo: Milestone 5 (grupos de até 4 jogadores).
 

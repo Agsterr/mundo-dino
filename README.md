@@ -44,6 +44,20 @@ git clone https://github.com/Agsterr/mundo-dino.git
 | Colete de Couro | 4 couro + 2 fibra |
 | Armadura de Placas | 10 sucata + 5 couro |
 
+### Chat e chamadas de voz
+
+**Chat global:** digite e pressione Enter (ou clique Enviar). Todos os jogadores veem.
+
+**Chat privado:** `/w 1 oi` — envia só para o Jogador com ID 1. Use `/players` para ver IDs.
+
+**Chamada de voz:**
+1. Defina o ID do alvo no painel (canto inferior direito)
+2. **C** para ligar — o outro jogador aceita com **C**
+3. Segure **V** para falar (push-to-talk)
+4. **C** novamente para encerrar
+
+> A voz usa microfone do PC e transmissão em tempo real entre os dois jogadores em chamada. Qualidade é de protótipo; para produção considere Vivox.
+
 ### Testar multiplayer (Milestone 4)
 
 1. **Build** ou abra duas instâncias do jogo (Editor + Build, ou ParrelSync)
@@ -66,6 +80,10 @@ git clone https://github.com/Agsterr/mundo-dino.git
 | Rifle | 2 |
 | Coletar loot / recurso | E |
 | Menu de crafting | Tab |
+| Chat | T (focar) + Enter (enviar) |
+| Mensagem privada | `/w <id> <texto>` |
+| Ligar / desligar chamada | C |
+| Falar na chamada (PTT) | Segurar V |
 
 ## Testar Velociraptor (Milestone 3)
 

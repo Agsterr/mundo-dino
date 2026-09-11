@@ -1,4 +1,6 @@
 using OpenWorldDinoSurvival.Inventory;
+using OpenWorldDinoSurvival.Multiplayer.Chat;
+using OpenWorldDinoSurvival.Multiplayer.Voice;
 using OpenWorldDinoSurvival.Player;
 using OpenWorldDinoSurvival.UI;
 using Unity.Netcode;
@@ -27,6 +29,8 @@ namespace OpenWorldDinoSurvival.Multiplayer
         [SerializeField] private WeaponHUD weaponHud;
         [SerializeField] private CraftingHUD craftingHud;
         [SerializeField] private PlayerInteractor interactor;
+        [SerializeField] private ChatHUD chatHud;
+        [SerializeField] private VoiceCallHUD voiceCallHud;
 
         private void Reset()
         {
@@ -40,6 +44,8 @@ namespace OpenWorldDinoSurvival.Multiplayer
             weaponHud = GetComponent<WeaponHUD>();
             craftingHud = GetComponent<CraftingHUD>();
             interactor = GetComponent<PlayerInteractor>();
+            chatHud = GetComponent<ChatHUD>();
+            voiceCallHud = GetComponent<VoiceCallHUD>();
         }
 
         public override void OnNetworkSpawn()
@@ -94,6 +100,16 @@ namespace OpenWorldDinoSurvival.Multiplayer
             if (interactor != null)
             {
                 interactor.enabled = isOwner;
+            }
+
+            if (chatHud != null)
+            {
+                chatHud.enabled = isOwner;
+            }
+
+            if (voiceCallHud != null)
+            {
+                voiceCallHud.enabled = isOwner;
             }
 
             if (isOwner)
