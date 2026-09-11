@@ -8,9 +8,9 @@ Desenvolver em **pequenas entregas jogáveis**. Nunca implementar sistemas futur
 
 ## Milestone ativa
 
-**Milestone 1** — personagem andando em mapa 3D com câmera terceira pessoa.
+**Milestone 2** — atirar (arma, mira, munição, recarga, efeitos).
 
-Próximo: Milestone 2 (armas e tiro).
+Próximo: Milestone 3 (Velociraptor + IA).
 
 ## Regras de código
 
@@ -24,23 +24,27 @@ Próximo: Milestone 2 (armas e tiro).
 
 ```
 Assets/Scripts/
-├── Player/       PlayerMovement, ThirdPersonCamera, PlayerInputController
-├── Weapons/      (Milestone 2)
-├── Dinosaurs/    (Milestone 3)
-├── AI/           (Milestone 3)
-├── Multiplayer/  (Milestone 4+)
-├── Inventory/    (Milestone 7)
-├── Loot/         (Milestone 6)
-├── World/        (Milestone 6)
-├── UI/
-└── Systems/
+├── Player/       PlayerMovement, ThirdPersonCamera, PlayerInputController, PlayerWeaponController
+├── Weapons/      WeaponStats (ScriptableObject), Weapon
+├── Systems/        Health
+├── UI/             WeaponHUD
+├── World/          TrainingRangeSetup
+├── Dinosaurs/      (Milestone 3)
+├── AI/             (Milestone 3)
+├── Multiplayer/    (Milestone 4+)
+├── Inventory/      (Milestone 7)
+└── Loot/           (Milestone 6)
 ```
 
-## Como testar (Milestone 1)
+## Como testar (Milestone 2)
 
-1. Abrir projeto no Unity 2022.3 LTS
-2. Cena: `Assets/Scenes/MainScene.unity`
-3. Play → WASD move, mouse gira câmera, Shift sprint, Espaço pula
+1. Unity 2022.3 LTS → `Assets/Scenes/MainScene.unity` → Play
+2. WASD + mouse para mover; alvos vermelhos aparecem à frente
+3. **1** = pistola (semi-automática), **2** = rifle (automática)
+4. Clique esquerdo atira; **R** recarrega
+5. Alvos somem ao perder 100 HP (4 tiros de pistola ou 3 de rifle)
+
+> Nota: dano é local no Milestone 2. Server-authoritative começa no Milestone 4.
 
 ## Unity
 

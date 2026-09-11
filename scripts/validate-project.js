@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 /**
- * Valida estrutura mínima do projeto Unity (Milestone 1).
+ * Valida estrutura mínima do projeto Unity.
  */
 const fs = require('fs');
 const path = require('path');
@@ -12,6 +12,14 @@ const required = [
   'Assets/Scripts/Player/PlayerMovement.cs',
   'Assets/Scripts/Player/ThirdPersonCamera.cs',
   'Assets/Scripts/Player/PlayerInputController.cs',
+  'Assets/Scripts/Player/PlayerWeaponController.cs',
+  'Assets/Scripts/Weapons/WeaponStats.cs',
+  'Assets/Scripts/Weapons/Weapon.cs',
+  'Assets/Scripts/Systems/Health.cs',
+  'Assets/Scripts/UI/WeaponHUD.cs',
+  'Assets/Scripts/World/TrainingRangeSetup.cs',
+  'Assets/Resources/Weapons/PistolStats.asset',
+  'Assets/Resources/Weapons/RifleStats.asset',
   'Assets/Input/PlayerControls.inputactions',
   'Packages/manifest.json',
   'ProjectSettings/ProjectVersion.txt',

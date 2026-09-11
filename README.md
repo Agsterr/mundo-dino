@@ -4,12 +4,14 @@ Jogo 3D multiplayer de sobrevivência em mundo aberto com dinossauros, PvP e coo
 
 **Stack:** Unity 2022.3 LTS · C# · Input System · (futuro) Netcode for GameObjects
 
-## Milestone atual: 1 — Personagem no mapa
+## Milestone atual: 2 — Atirar
 
-- [x] Projeto Unity configurado
-- [x] Personagem com movimentação (WASD, sprint, pulo)
-- [x] Câmera em terceira pessoa
-- [x] Mapa simples (plano 200×200 m)
+- [x] Milestone 1 (movimentação + câmera + mapa)
+- [x] Pistola e rifle com stats configuráveis (`WeaponStats`)
+- [x] Tiro hitscan com spread, alcance e dano
+- [x] Munição, pente e recarga
+- [x] Efeito visual de trilha (LineRenderer)
+- [x] Alvos de treino + HUD (munição e mira)
 
 ## Pré-requisitos
 
@@ -36,14 +38,26 @@ git clone https://github.com/Agsterr/open-world-dino-survival.git
 | Olhar | Mouse |
 | Sprint | Left Shift |
 | Pular | Espaço |
+| Atirar | Botão esquerdo do mouse |
+| Recarregar | R |
+| Pistola | 1 |
+| Rifle | 2 |
+
+## Testar tiros (Milestone 2)
+
+1. Play na cena `MainScene`
+2. Ande até os **3 alvos vermelhos** à frente
+3. Atire com pistola (1) ou rifle automático (2)
+4. Observe HUD no canto superior esquerdo e mira `+` no centro
+5. Pressione **R** para recarregar quando o pente esvaziar
 
 ## Estrutura do projeto
 
 ```
 Assets/
 ├── Scripts/
-│   ├── Player/       ← Milestone 1
-│   ├── Weapons/      ← Milestone 2
+│   ├── Player/       ← movimentação, câmera, armas
+│   ├── Weapons/      ← WeaponStats, Weapon (Milestone 2)
 │   ├── Dinosaurs/    ← Milestone 3
 │   ├── AI/
 │   ├── Multiplayer/
