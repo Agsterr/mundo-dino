@@ -8,9 +8,9 @@ Desenvolver em **pequenas entregas jogáveis**. Nunca implementar sistemas futur
 
 ## Milestone ativa
 
-**Milestone 2** — atirar (arma, mira, munição, recarga, efeitos).
+**Milestone 3** — Velociraptor com IA básica.
 
-Próximo: Milestone 3 (Velociraptor + IA).
+Próximo: Milestone 4 (multiplayer PvP, dano server-side).
 
 ## Regras de código
 
@@ -24,27 +24,27 @@ Próximo: Milestone 3 (Velociraptor + IA).
 
 ```
 Assets/Scripts/
-├── Player/       PlayerMovement, ThirdPersonCamera, PlayerInputController, PlayerWeaponController
-├── Weapons/      WeaponStats (ScriptableObject), Weapon
-├── Systems/        Health
-├── UI/             WeaponHUD
-├── World/          TrainingRangeSetup
-├── Dinosaurs/      (Milestone 3)
-├── AI/             (Milestone 3)
-├── Multiplayer/    (Milestone 4+)
-├── Inventory/      (Milestone 7)
-└── Loot/           (Milestone 6)
+├── Player/       PlayerMovement, ThirdPersonCamera, PlayerWeaponController, PlayerHealth
+├── Weapons/      WeaponStats, Weapon
+├── Dinosaurs/    DinosaurStats
+├── AI/           VelociraptorAI (Idle→Patrol→Chase→Attack→Search→Return)
+├── Systems/      Health
+├── UI/           WeaponHUD (munição, vida, mira)
+├── World/        TrainingRangeSetup, DinosaurSpawner
+├── Multiplayer/  (Milestone 4+)
+├── Inventory/    (Milestone 7)
+└── Loot/         (Milestone 6)
 ```
 
-## Como testar (Milestone 2)
+## Como testar (Milestone 3)
 
 1. Unity 2022.3 LTS → `Assets/Scenes/MainScene.unity` → Play
-2. WASD + mouse para mover; alvos vermelhos aparecem à frente
-3. **1** = pistola (semi-automática), **2** = rifle (automática)
-4. Clique esquerdo atira; **R** recarrega
-5. Alvos somem ao perder 100 HP (4 tiros de pistola ou 3 de rifle)
+2. Velociraptor spawna em `(12, 1, 18)` — patrulha a área
+3. Aproxime ou atire para alertá-lo
+4. Mate o raptor (150 HP) ou seja atacado (20 dano, respawn 3s)
+5. HUD mostra munição + vida do jogador
 
-> Nota: dano é local no Milestone 2. Server-authoritative começa no Milestone 4.
+> Dano é local até o Milestone 4 (multiplayer server-authoritative).
 
 ## Unity
 

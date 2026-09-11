@@ -4,14 +4,14 @@ Jogo 3D multiplayer de sobrevivência em mundo aberto com dinossauros, PvP e coo
 
 **Stack:** Unity 2022.3 LTS · C# · Input System · (futuro) Netcode for GameObjects
 
-## Milestone atual: 2 — Atirar
+## Milestone atual: 3 — Velociraptor + IA
 
-- [x] Milestone 1 (movimentação + câmera + mapa)
-- [x] Pistola e rifle com stats configuráveis (`WeaponStats`)
-- [x] Tiro hitscan com spread, alcance e dano
-- [x] Munição, pente e recarga
-- [x] Efeito visual de trilha (LineRenderer)
-- [x] Alvos de treino + HUD (munição e mira)
+- [x] Milestones 1 e 2
+- [x] Velociraptor placeholder (capsule marrom)
+- [x] Vida, ataque corpo-a-corpo e morte
+- [x] IA: Idle → Patrol → Chase → Attack → Search → Return
+- [x] Percepção: visão + som (tiros alertam o raptor)
+- [x] Vida do jogador + respawn
 
 ## Pré-requisitos
 
@@ -42,6 +42,15 @@ git clone https://github.com/Agsterr/mundo-dino.git
 | Recarregar | R |
 | Pistola | 1 |
 | Rifle | 2 |
+
+## Testar Velociraptor (Milestone 3)
+
+1. Play na cena `MainScene`
+2. O **Velociraptor** spawna perto de `(12, 0, 18)` — capsule marrom
+3. Aproxime-se: ele **patrulha**, **te vê** e **persegue**
+4. Atire nele (150 HP — ~6 tiros de pistola) ou deixe chegar perto (20 de dano/ataque)
+5. Se morrer, **respawn em 3 segundos** no ponto inicial
+6. Tiros próximos **alertam** o raptor mesmo fora do campo de visão
 
 ## Testar tiros (Milestone 2)
 
