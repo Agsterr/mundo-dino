@@ -1,0 +1,16 @@
+{
+  "name": "open-world-dino-survival",
+  "version": "0.1.0",
+  "description": "Jogo 3D multiplayer de sobrevivência com dinossauros — Unity/C#",
+  "private": true,
+  "scripts": {
+    "validate": "node scripts/validate-project.js",
+    "tree": "node scripts/print-tree.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Agsterr/open-world-dino-survival.git"
+  },
+  "keywords": ["unity", "game", "multiplayer", "survival", "dinosaur"],
+  "license": "MIT"
+}
