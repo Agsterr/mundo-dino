@@ -107,7 +107,7 @@ namespace OpenWorldDinoSurvival.Multiplayer
             }
 
             transform.position = _spawnPosition;
-            _networkHealth.Value = maxHealth;
+            _networkHealth.Value = MaxHealth;
 
             if (_controller != null)
             {
