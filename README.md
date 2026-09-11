@@ -1,1 +1,145 @@
+<<<<<<< HEAD
 # mundo-dino
+=======
+# Open World Dino Survival
+
+Jogo 3D multiplayer de sobrevivência em mundo aberto com dinossauros, PvP e cooperação.
+
+**Stack:** Unity 2022.3 LTS · C# · Input System · (futuro) Netcode for GameObjects
+
+## Milestone atual: 3 — Velociraptor + IA
+
+- [x] Milestones 1 e 2
+- [x] Velociraptor placeholder (capsule marrom)
+- [x] Vida, ataque corpo-a-corpo e morte
+- [x] IA: Idle → Patrol → Chase → Attack → Search → Return
+- [x] Percepção: visão + som (tiros alertam o raptor)
+- [x] Vida do jogador + respawn
+
+## Pré-requisitos
+
+- [Unity Hub](https://unity.com/download) com **Unity 2022.3 LTS**
+- Git
+
+## Como abrir o projeto
+
+```bash
+git clone https://github.com/Agsterr/mundo-dino.git
+```
+
+1. Abra o **Unity Hub**
+2. **Add** → selecione a pasta clonada
+3. Abra com **Unity 2022.3 LTS**
+4. Abra a cena `Assets/Scenes/MainScene.unity`
+5. Pressione **Play**
+
+## Controles
+
+| Ação | Tecla |
+|------|-------|
+| Mover | W A S D |
+| Olhar | Mouse |
+| Sprint | Left Shift |
+| Pular | Espaço |
+| Atirar | Botão esquerdo do mouse |
+| Recarregar | R |
+| Pistola | 1 |
+| Rifle | 2 |
+
+## Testar Velociraptor (Milestone 3)
+
+1. Play na cena `MainScene`
+2. O **Velociraptor** spawna perto de `(12, 0, 18)` — capsule marrom
+3. Aproxime-se: ele **patrulha**, **te vê** e **persegue**
+4. Atire nele (150 HP — ~6 tiros de pistola) ou deixe chegar perto (20 de dano/ataque)
+5. Se morrer, **respawn em 3 segundos** no ponto inicial
+6. Tiros próximos **alertam** o raptor mesmo fora do campo de visão
+
+## Testar tiros (Milestone 2)
+
+1. Play na cena `MainScene`
+2. Ande até os **3 alvos vermelhos** à frente
+3. Atire com pistola (1) ou rifle automático (2)
+4. Observe HUD no canto superior esquerdo e mira `+` no centro
+5. Pressione **R** para recarregar quando o pente esvaziar
+
+## Estrutura do projeto
+
+```
+Assets/
+├── Scripts/
+│   ├── Player/       ← movimentação, câmera, armas
+│   ├── Weapons/      ← WeaponStats, Weapon (Milestone 2)
+│   ├── Dinosaurs/    ← Milestone 3
+│   ├── AI/
+│   ├── Multiplayer/
+│   ├── Inventory/
+│   ├── Loot/
+│   ├── World/
+│   ├── UI/
+│   └── Systems/
+├── Prefabs/
+├── Scenes/
+├── Materials/
+├── Models/
+├── Animations/
+├── Audio/
+└── Resources/
+```
+
+## Desenvolvimento incremental
+
+O jogo é construído em milestones pequenas e jogáveis. **Não implemente sistemas futuros antes dos atuais funcionarem.**
+
+| # | Objetivo |
+|---|----------|
+| 1 | Personagem andando no mapa 3D |
+| 2 | Atirar (arma, mira, munição, recarga) |
+| 3 | Primeiro dinossauro (Velociraptor + IA) |
+| 4 | PvP (2 jogadores, dano server-side) |
+| 5 | Cooperação (grupo de 4) |
+| 6 | Mundo aberto (regiões, loot) |
+| 7 | Sobrevivência (inventário, crafting) |
+| 8 | Progressão |
+| 9 | Servidor persistente |
+
+Detalhes completos em [`docs/GAME_DESIGN.md`](docs/GAME_DESIGN.md).
+
+## Regras de arquitetura
+
+- Código simples, sem abstrações desnecessárias
+- Multiplayer server-authoritative desde o Milestone 4
+- Cliente **nunca** decide dano, vida, munição ou inventário
+- Uma entrega funcional por vez
+
+## Scripts npm (validação local)
+
+```bash
+npm install
+npm run validate    # verifica estrutura de pastas e arquivos essenciais
+npm run tree        # mostra árvore do projeto
+```
+
+## Licença
+
+MIT — veja [LICENSE](LICENSE).
+
+## Publicar no GitHub
+
+Repositório: **https://github.com/Agsterr/mundo-dino**
+
+Se você acabou de criar o repo, envie o código local:
+
+```bash
+cd open-world-dino-survival   # pasta do projeto Unity
+git remote set-url origin https://github.com/Agsterr/mundo-dino.git
+git push -u origin main
+```
+
+Se o GitHub pedir porque o repo já tem README:
+
+```bash
+git pull origin main --allow-unrelated-histories
+git push -u origin main
+```
+>>>>>>> unity-src/cursor/unity-milestones-1-3-b85e
