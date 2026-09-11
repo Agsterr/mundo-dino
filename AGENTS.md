@@ -8,7 +8,7 @@ Desenvolver em **pequenas entregas jogáveis**. Nunca implementar sistemas futur
 
 ## Milestone ativa
 
-**Milestone 4 + Crafting + Comunicação** — Multiplayer, crafting, chat global/privado e chamadas de voz PTT.
+**Milestone 4 + Crafting + Comunicação + Habilidades** — Multiplayer, crafting, chat/voz, asas, luta melee e dominação de dinossauros.
 
 Próximo: Milestone 5 (grupos de até 4 jogadores).
 
@@ -24,12 +24,12 @@ Próximo: Milestone 5 (grupos de até 4 jogadores).
 
 ```
 Assets/Scripts/
-├── Player/       PlayerMovement, ThirdPersonCamera, PlayerWeaponController, PlayerHealth
+├── Player/       PlayerMovement, ThirdPersonCamera, PlayerWeaponController, PlayerWings, PlayerMeleeCombat, PlayerDinosaurDomination
 ├── Weapons/      WeaponStats, Weapon
-├── Dinosaurs/    DinosaurStats
+├── Dinosaurs/    DinosaurStats, DinosaurMountable, DinosaurPlayerControl
 ├── AI/           VelociraptorAI (Idle→Patrol→Chase→Attack→Search→Return)
 ├── Systems/      Health
-├── UI/           WeaponHUD (munição, vida, mira)
+├── UI/           WeaponHUD, CraftingHUD, AbilitiesHUD
 ├── World/        TrainingRangeSetup, DinosaurSpawner
 ├── Multiplayer/  NetworkPlayerSetup, NetworkPlayerHealth, NetworkPlayerCombat, ConnectionUI
 ├── Inventory/    ItemIds, PlayerInventory, NetworkPlayerInventory, PlayerCrafting, PlayerArmor, CraftingRecipe

@@ -17,14 +17,18 @@ namespace OpenWorldDinoSurvival.Player
         [SerializeField] private Transform cameraTransform;
 
         private CharacterController _controller;
+        private PlayerWings _wings;
         private Vector2 _moveInput;
         private bool _sprintInput;
         private bool _jumpRequested;
         private float _verticalVelocity;
 
+        public bool IsAirborne => _controller != null && !_controller.isGrounded;
+
         private void Awake()
         {
             _controller = GetComponent<CharacterController>();
+            _wings = GetComponent<PlayerWings>();
 
             if (cameraTransform == null && Camera.main != null)
             {
@@ -34,6 +38,7 @@ namespace OpenWorldDinoSurvival.Player
 
         private void Update()
         {
+            _wings?.TickFuel(IsAirborne);
             ApplyGravity();
             Move();
         }
@@ -50,6 +55,20 @@ namespace OpenWorldDinoSurvival.Player
 
         public void OnJump(InputAction.CallbackContext context)
         {
+            if (_wings != null && _wings.IsFlying && IsAirborne)
+            {
+                if (context.started)
+                {
+                    _wings.SetAscendHeld(true);
+                }
+                else if (context.canceled)
+                {
+                    _wings.SetAscendHeld(false);
+                }
+
+                return;
+            }
+
             if (context.performed && _controller.isGrounded)
             {
                 _jumpRequested = true;
@@ -68,6 +87,10 @@ namespace OpenWorldDinoSurvival.Player
             input.Normalize();
 
             float speed = _sprintInput ? sprintSpeed : walkSpeed;
+            if (_wings != null && _wings.IsFlying && IsAirborne)
+            {
+                speed = _wings.FlySpeed;
+            }
             Vector3 cameraForward = cameraTransform.forward;
             Vector3 cameraRight = cameraTransform.right;
             cameraForward.y = 0f;
@@ -97,7 +120,17 @@ namespace OpenWorldDinoSurvival.Player
                 _jumpRequested = false;
             }
 
-            _verticalVelocity += gravity * Time.deltaTime;
+            float gravityForce = gravity;
+            if (_wings != null && _wings.IsFlying && IsAirborne)
+            {
+                gravityForce = _wings.GlideGravity;
+                if (_wings.AscendHeld)
+                {
+                    _verticalVelocity = _wings.AscendSpeed;
+                }
+            }
+
+            _verticalVelocity += gravityForce * Time.deltaTime;
         }
     }
 }

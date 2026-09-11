@@ -19,6 +19,12 @@ namespace OpenWorldDinoSurvival.Player
         [SerializeField] private CraftingHUD craftingHud;
         [SerializeField] private ChatHUD chatHud;
         [SerializeField] private VoiceCallHUD voiceCallHud;
+        [SerializeField] private PlayerWings wings;
+        [SerializeField] private PlayerMeleeCombat meleeCombat;
+        [SerializeField] private PlayerDinosaurDomination domination;
+
+        private bool _sprintHeld;
+        private Vector2 _lastMoveInput;
 
         private void Reset()
         {
@@ -29,6 +35,9 @@ namespace OpenWorldDinoSurvival.Player
             craftingHud = GetComponent<CraftingHUD>();
             chatHud = GetComponent<ChatHUD>();
             voiceCallHud = GetComponent<VoiceCallHUD>();
+            wings = GetComponent<PlayerWings>();
+            meleeCombat = GetComponent<PlayerMeleeCombat>();
+            domination = GetComponent<PlayerDinosaurDomination>();
         }
 
         private void Awake()
@@ -37,13 +46,54 @@ namespace OpenWorldDinoSurvival.Player
             craftingHud ??= GetComponent<CraftingHUD>();
             chatHud ??= GetComponent<ChatHUD>();
             voiceCallHud ??= GetComponent<VoiceCallHUD>();
+            wings ??= GetComponent<PlayerWings>();
+            meleeCombat ??= GetComponent<PlayerMeleeCombat>();
+            domination ??= GetComponent<PlayerDinosaurDomination>();
         }
 
-        public void OnMove(InputAction.CallbackContext context) => movement.OnMove(context);
+        public void OnMove(InputAction.CallbackContext context)
+        {
+            _lastMoveInput = context.ReadValue<Vector2>();
+            if (domination != null && domination.IsDominating)
+            {
+                domination.RelayDinoMove(_lastMoveInput, _sprintHeld);
+                return;
+            }
+
+            movement.OnMove(context);
+        }
+
         public void OnLook(InputAction.CallbackContext context) => cameraController.OnLook(context);
-        public void OnSprint(InputAction.CallbackContext context) => movement.OnSprint(context);
+
+        public void OnSprint(InputAction.CallbackContext context)
+        {
+            _sprintHeld = context.ReadValueAsButton();
+            if (domination != null && domination.IsDominating)
+            {
+                domination.RelayDinoMove(_lastMoveInput, _sprintHeld);
+                return;
+            }
+
+            movement.OnSprint(context);
+        }
+
         public void OnJump(InputAction.CallbackContext context) => movement.OnJump(context);
-        public void OnFire(InputAction.CallbackContext context) => weaponController.OnFire(context);
+
+        public void OnFire(InputAction.CallbackContext context)
+        {
+            if (domination != null && domination.IsDominating)
+            {
+                if (context.performed)
+                {
+                    domination.RelayDinoAttack();
+                }
+
+                return;
+            }
+
+            weaponController.OnFire(context);
+        }
+
         public void OnReload(InputAction.CallbackContext context) => weaponController.OnReload(context);
         public void OnSwitchPistol(InputAction.CallbackContext context) => weaponController.OnSwitchPistol(context);
         public void OnSwitchRifle(InputAction.CallbackContext context) => weaponController.OnSwitchRifle(context);
@@ -106,6 +156,54 @@ namespace OpenWorldDinoSurvival.Player
             else if (context.canceled)
             {
                 voiceCallHud.SetPushToTalk(false);
+            }
+        }
+
+        public void OnToggleWings(InputAction.CallbackContext context)
+        {
+            if (context.performed && wings != null && (domination == null || !domination.IsDominating))
+            {
+                wings.ToggleWings();
+            }
+        }
+
+        public void OnLightAttack(InputAction.CallbackContext context)
+        {
+            if (!context.performed || meleeCombat == null || (domination != null && domination.IsDominating))
+            {
+                return;
+            }
+
+            if (Keyboard.current != null && Keyboard.current.leftShiftKey.isPressed)
+            {
+                meleeCombat.TryHeavyAttack();
+                return;
+            }
+
+            meleeCombat.TryLightAttack();
+        }
+
+        public void OnHeavyAttack(InputAction.CallbackContext context)
+        {
+            if (context.performed && meleeCombat != null && (domination == null || !domination.IsDominating))
+            {
+                meleeCombat.TryHeavyAttack();
+            }
+        }
+
+        public void OnDodge(InputAction.CallbackContext context)
+        {
+            if (context.performed && meleeCombat != null && (domination == null || !domination.IsDominating))
+            {
+                meleeCombat.TryDodge();
+            }
+        }
+
+        public void OnDominate(InputAction.CallbackContext context)
+        {
+            if (context.performed && domination != null)
+            {
+                domination.TryToggleDomination();
             }
         }
     }

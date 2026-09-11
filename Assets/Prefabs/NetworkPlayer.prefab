@@ -31,6 +31,11 @@ GameObject:
   - component: {fileID: 100022}
   - component: {fileID: 100023}
   - component: {fileID: 100024}
+  - component: {fileID: 100025}
+  - component: {fileID: 100026}
+  - component: {fileID: 100027}
+  - component: {fileID: 100028}
+  - component: {fileID: 100029}
   m_Layer: 0
   m_Name: NetworkPlayer
   m_TagString: Player
@@ -105,6 +110,9 @@ MonoBehaviour:
   movement: {fileID: 100005}
   cameraController: {fileID: 200004}
   weaponController: {fileID: 100007}
+  wings: {fileID: 100025}
+  meleeCombat: {fileID: 100026}
+  domination: {fileID: 100027}
 --- !u!114 &100007
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -259,6 +267,51 @@ MonoBehaviour:
         m_CallState: 2
     m_ActionId: c5d6e7f8-a9b0-1234-8901-345678901235
     m_ActionName: Player/PushToTalk
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 100006}
+        m_TargetAssemblyTypeName: OpenWorldDinoSurvival.Player.PlayerInputController, Assembly-CSharp
+        m_MethodName: OnToggleWings
+        m_Mode: 0
+        m_CallState: 2
+    m_ActionId: d6e7f8a9-b0c1-2345-9012-456789012346
+    m_ActionName: Player/ToggleWings
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 100006}
+        m_TargetAssemblyTypeName: OpenWorldDinoSurvival.Player.PlayerInputController, Assembly-CSharp
+        m_MethodName: OnLightAttack
+        m_Mode: 0
+        m_CallState: 2
+    m_ActionId: e7f8a9b0-c1d2-3456-0123-567890123457
+    m_ActionName: Player/LightAttack
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 100006}
+        m_TargetAssemblyTypeName: OpenWorldDinoSurvival.Player.PlayerInputController, Assembly-CSharp
+        m_MethodName: OnHeavyAttack
+        m_Mode: 0
+        m_CallState: 2
+    m_ActionId: f8a9b0c1-d2e3-4567-1234-678901234568
+    m_ActionName: Player/HeavyAttack
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 100006}
+        m_TargetAssemblyTypeName: OpenWorldDinoSurvival.Player.PlayerInputController, Assembly-CSharp
+        m_MethodName: OnDodge
+        m_Mode: 0
+        m_CallState: 2
+    m_ActionId: a9b0c1d2-e3f4-5678-2345-789012345679
+    m_ActionName: Player/Dodge
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 100006}
+        m_TargetAssemblyTypeName: OpenWorldDinoSurvival.Player.PlayerInputController, Assembly-CSharp
+        m_MethodName: OnDominate
+        m_Mode: 0
+        m_CallState: 2
+    m_ActionId: b0c1d2e3-f4a5-6789-3456-890123456790
+    m_ActionName: Player/Dominate
   m_DefaultActionMap: Player
 --- !u!114 &100010
 MonoBehaviour:
@@ -303,6 +356,7 @@ MonoBehaviour:
   interactor: {fileID: 100018}
   chatHud: {fileID: 100021}
   voiceCallHud: {fileID: 100024}
+  abilitiesHud: {fileID: 100029}
 --- !u!114 &100013
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -374,6 +428,37 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f80718293a4b5c6d7e8f091011121707, type: 3}
   playerVoice: {fileID: 100022}
   transmitter: {fileID: 100023}
+--- !u!114 &100025
+MonoBehaviour:
+  m_GameObject: {fileID: 100000}
+  m_Enabled: 1
+  m_Script: {fileID: 11500000, guid: a80718293a4b5c6d7e8f091011121803, type: 3}
+--- !u!114 &100026
+MonoBehaviour:
+  m_GameObject: {fileID: 100000}
+  m_Enabled: 1
+  m_Script: {fileID: 11500000, guid: a80718293a4b5c6d7e8f091011121804, type: 3}
+--- !u!114 &100027
+MonoBehaviour:
+  m_GameObject: {fileID: 100000}
+  m_Enabled: 1
+  m_Script: {fileID: 11500000, guid: a80718293a4b5c6d7e8f091011121805, type: 3}
+--- !u!114 &100028
+MonoBehaviour:
+  m_GameObject: {fileID: 100000}
+  m_Enabled: 1
+  m_Script: {fileID: 11500000, guid: a80718293a4b5c6d7e8f091011121806, type: 3}
+  meleeCombat: {fileID: 100026}
+  domination: {fileID: 100027}
+  health: {fileID: 100008}
+--- !u!114 &100029
+MonoBehaviour:
+  m_GameObject: {fileID: 100000}
+  m_Enabled: 1
+  m_Script: {fileID: 11500000, guid: a80718293a4b5c6d7e8f091011121807, type: 3}
+  wings: {fileID: 100025}
+  meleeCombat: {fileID: 100026}
+  domination: {fileID: 100027}
 --- !u!1 &200000
 GameObject:
   m_ObjectHideFlags: 0

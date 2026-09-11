@@ -3,18 +3,20 @@ using OpenWorldDinoSurvival.Dinosaurs;
 using OpenWorldDinoSurvival.Inventory;
 using OpenWorldDinoSurvival.Loot;
 using OpenWorldDinoSurvival.Systems;
+using Unity.Netcode;
 using UnityEngine;
 
 namespace OpenWorldDinoSurvival.World
 {
     /// <summary>
-    /// Spawna o Velociraptor na cena (Milestone 3).
+    /// Spawna o Velociraptor na cena (Milestone 3) com suporte a dominação em rede.
     /// </summary>
     public class DinosaurSpawner : MonoBehaviour
     {
         [SerializeField] private Vector3 spawnPosition = new Vector3(12f, 1f, 18f);
         [SerializeField] private DinosaurStats stats;
         [SerializeField] private Color bodyColor = new Color(0.45f, 0.35f, 0.15f);
+        [SerializeField] private GameObject velociraptorPrefab;
 
         private void Start()
         {
@@ -23,10 +25,34 @@ namespace OpenWorldDinoSurvival.World
                 stats = Resources.Load<DinosaurStats>("Dinosaurs/VelociraptorStats");
             }
 
-            CreateVelociraptor();
+            if (velociraptorPrefab != null)
+            {
+                SpawnFromPrefab();
+                return;
+            }
+
+            CreateVelociraptorRuntime();
         }
 
-        private void CreateVelociraptor()
+        private void SpawnFromPrefab()
+        {
+            GameObject raptor = Instantiate(velociraptorPrefab, spawnPosition, Quaternion.identity);
+            raptor.name = "Velociraptor";
+
+            VelociraptorAI ai = raptor.GetComponent<VelociraptorAI>();
+            if (ai != null && stats != null)
+            {
+                ai.Initialize(stats);
+            }
+
+            NetworkObject networkObject = raptor.GetComponent<NetworkObject>();
+            if (networkObject != null && NetworkManager.Singleton != null && NetworkManager.Singleton.IsListening && NetworkManager.Singleton.IsServer)
+            {
+                networkObject.Spawn();
+            }
+        }
+
+        private void CreateVelociraptorRuntime()
         {
             GameObject raptor = GameObject.CreatePrimitive(PrimitiveType.Capsule);
             raptor.name = "Velociraptor";
@@ -49,6 +75,8 @@ namespace OpenWorldDinoSurvival.World
             raptor.AddComponent<Health>();
             VelociraptorAI ai = raptor.AddComponent<VelociraptorAI>();
             ai.Initialize(stats);
+            raptor.AddComponent<DinosaurMountable>();
+            raptor.AddComponent<DinosaurPlayerControl>();
 
             LootOnDeath loot = raptor.AddComponent<LootOnDeath>();
             loot.SetDrops(new[]
@@ -68,8 +96,12 @@ namespace OpenWorldDinoSurvival.World
                     color = new Color(0.7f, 0.7f, 0.75f)
                 }
             });
+
+            NetworkObject networkObject = raptor.AddComponent<NetworkObject>();
+            if (NetworkManager.Singleton != null && NetworkManager.Singleton.IsListening && NetworkManager.Singleton.IsServer)
+            {
+                networkObject.Spawn();
+            }
         }
     }
 }
-
-

@@ -28,6 +28,8 @@ namespace OpenWorldDinoSurvival.Multiplayer
         private PlayerInputController _inputController;
         private CharacterController _controller;
         private NetworkPlayerInventory _inventory;
+        private NetworkPlayerAbilities _abilities;
+        private PlayerDinosaurDomination _domination;
 
         public float CurrentHealth => _networkHealth.Value;
         public float MaxHealth => maxHealth + (_inventory != null ? _inventory.HealthBonus : 0f);
@@ -45,6 +47,8 @@ namespace OpenWorldDinoSurvival.Multiplayer
             _inputController = GetComponent<PlayerInputController>();
             _controller = GetComponent<CharacterController>();
             _inventory = GetComponent<NetworkPlayerInventory>();
+            _abilities = GetComponent<NetworkPlayerAbilities>();
+            _domination = GetComponent<PlayerDinosaurDomination>();
         }
 
         public override void OnNetworkSpawn()
@@ -66,6 +70,11 @@ namespace OpenWorldDinoSurvival.Multiplayer
         public void TakeDamage(float amount)
         {
             if (!IsServer || !IsAlive || amount <= 0f)
+            {
+                return;
+            }
+
+            if (_abilities != null && _abilities.IsInvulnerable())
             {
                 return;
             }
@@ -95,6 +104,15 @@ namespace OpenWorldDinoSurvival.Multiplayer
 
         private void HandleDeathServer()
         {
+            if (_abilities != null)
+            {
+                _abilities.ReleaseDominationServer();
+            }
+            else
+            {
+                _domination?.EndDomination();
+            }
+
             SetControlsEnabled(false);
             Invoke(nameof(RespawnServer), respawnDelay);
         }

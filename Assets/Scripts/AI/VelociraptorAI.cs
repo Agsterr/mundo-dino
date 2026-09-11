@@ -36,8 +36,10 @@ namespace OpenWorldDinoSurvival.AI
         private float _stateTimer;
         private float _nextAttackTime;
         private float _currentSpeed;
+        private bool _possessed;
 
         public RaptorState CurrentState => _state;
+        public bool IsPossessed => _possessed;
 
         public void Initialize(DinosaurStats dinosaurStats)
         {
@@ -97,13 +99,18 @@ namespace OpenWorldDinoSurvival.AI
                 return;
             }
 
-            if (! _health.IsAlive || stats == null)
+            if (_possessed || ! _health.IsAlive || stats == null)
             {
                 return;
             }
 
             RefreshPlayerReference();
             UpdateState();
+        }
+
+        public void SetPossessed(bool possessed)
+        {
+            _possessed = possessed;
         }
 
         public void AlertToPosition(Vector3 worldPosition)

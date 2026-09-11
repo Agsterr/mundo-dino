@@ -4,12 +4,13 @@ Jogo 3D multiplayer de sobrevivência em mundo aberto com dinossauros, PvP e coo
 
 **Stack:** Unity 2022.3 LTS · C# · Input System · Netcode for GameObjects
 
-## Milestone atual: 4 + Crafting (M7 parcial)
+## Milestone atual: 4 + Crafting + Habilidades
 
 - [x] Milestones 1, 2, 3 e 4
 - [x] Coleta de materiais (E) e drops de inimigos
 - [x] Crafting de armas e armaduras (Tab)
 - [x] Inventário autoritativo no servidor (multiplayer)
+- [x] Asas, luta corpo-a-corpo e dominação de dinossauros
 
 ## Pré-requisitos
 
@@ -84,6 +85,22 @@ git clone https://github.com/Agsterr/mundo-dino.git
 | Mensagem privada | `/w <id> <texto>` |
 | Ligar / desligar chamada | C |
 | Falar na chamada (PTT) | Segurar V |
+| Asas (voo/planar) | F |
+| Soco leve | Q |
+| Golpe pesado | Botão direito do mouse (ou Shift+Q) |
+| Esquiva | X |
+| Dominar / soltar dinossauro | G |
+
+### Asas, luta e dominação de dinossauros
+
+**Asas (F):** abre asas para planar e voar. Segure **Espaço** no ar para subir. O combustível drena enquanto você voa e recarrega no chão.
+
+**Luta corpo-a-corpo:**
+- **Q** — soco leve (18 de dano)
+- **Botão direito** ou **Shift+Q** — golpe pesado (40 de dano)
+- **X** — esquiva com invulnerabilidade breve
+
+**Dominação (G):** com um Velociraptor abaixo de **50% de vida** e a até **5 m**, pressione **G** para controlá-lo. Use **WASD** para mover, **Shift** para correr e **clique esquerdo** para atacar. Pressione **G** novamente para soltar.
 
 ## Testar Velociraptor (Milestone 3)
 
