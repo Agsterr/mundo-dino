@@ -1,3 +1,4 @@
+using OpenWorldDinoSurvival.Multiplayer;
 using OpenWorldDinoSurvival.Player;
 using OpenWorldDinoSurvival.Weapons;
 using UnityEngine;
@@ -11,6 +12,9 @@ namespace OpenWorldDinoSurvival.UI
     {
         [SerializeField] private PlayerWeaponController weaponController;
         [SerializeField] private PlayerHealth playerHealth;
+        [SerializeField] private NetworkPlayerHealth networkPlayerHealth;
+        [SerializeField] private PlayerArmor playerArmor;
+        [SerializeField] private NetworkPlayerInventory networkInventory;
 
         private Weapon _trackedWeapon;
         private GUIStyle _labelStyle;
@@ -19,15 +23,15 @@ namespace OpenWorldDinoSurvival.UI
 
         private void Awake()
         {
-            if (weaponController == null)
-            {
-                weaponController = FindFirstObjectByType<PlayerWeaponController>();
-            }
+            weaponController ??= GetComponent<PlayerWeaponController>();
+            networkPlayerHealth ??= GetComponent<NetworkPlayerHealth>();
+            playerHealth ??= GetComponent<PlayerHealth>();
+            playerArmor ??= GetComponent<PlayerArmor>();
+            networkInventory ??= GetComponent<NetworkPlayerInventory>();
 
-            if (playerHealth == null)
-            {
-                playerHealth = FindFirstObjectByType<PlayerHealth>();
-            }
+            weaponController ??= FindFirstObjectByType<PlayerWeaponController>();
+            playerHealth ??= FindFirstObjectByType<PlayerHealth>();
+            networkPlayerHealth ??= FindFirstObjectByType<NetworkPlayerHealth>();
         }
 
         private void OnEnable()
@@ -96,7 +100,14 @@ namespace OpenWorldDinoSurvival.UI
                 $"{stats.weaponName}: {_trackedWeapon.AmmoInMagazine} / {_trackedWeapon.ReserveAmmo}{reload}",
                 _labelStyle);
 
-            if (playerHealth != null)
+            if (networkPlayerHealth != null)
+            {
+                string lifeText = networkPlayerHealth.IsAlive
+                    ? $"Vida: {Mathf.CeilToInt(networkPlayerHealth.CurrentHealth)} / {Mathf.CeilToInt(networkPlayerHealth.MaxHealth)}"
+                    : "Você morreu — respawn em breve...";
+                GUI.Label(new Rect(16, 44, 400, 28), lifeText, _healthStyle);
+            }
+            else if (playerHealth != null)
             {
                 string lifeText = playerHealth.IsAlive
                     ? $"Vida: {Mathf.CeilToInt(playerHealth.CurrentHealth)} / {Mathf.CeilToInt(playerHealth.MaxHealth)}"
@@ -104,7 +115,25 @@ namespace OpenWorldDinoSurvival.UI
                 GUI.Label(new Rect(16, 44, 400, 28), lifeText, _healthStyle);
             }
 
+            DrawArmorInfo();
             DrawCrosshair();
+        }
+
+        private void DrawArmorInfo()
+        {
+            string armorText = "Armadura: nenhuma";
+            if (networkInventory != null && networkInventory.ArmorTier > 0)
+            {
+                armorText = networkInventory.ArmorTier == 1
+                    ? "Armadura: Colete de Couro"
+                    : "Armadura: Placas de Metal";
+            }
+            else if (playerArmor != null && playerArmor.EquippedArmor != null)
+            {
+                armorText = $"Armadura: {playerArmor.EquippedArmor.armorName}";
+            }
+
+            GUI.Label(new Rect(16, 72, 400, 24), armorText, _healthStyle);
         }
 
         private void DrawCrosshair()
