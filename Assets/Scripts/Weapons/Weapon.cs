@@ -90,6 +90,14 @@ namespace OpenWorldDinoSurvival.Weapons
             OnAmmoChanged?.Invoke();
         }
 
+        public void SetAmmoState(int magazine, int reserve, bool reloading)
+        {
+            _ammoInMagazine = magazine;
+            _reserveAmmo = reserve;
+            _isReloading = reloading;
+            OnAmmoChanged?.Invoke();
+        }
+
         public bool TryFire(Camera aimCamera)
         {
             if (stats == null || aimCamera == null || _isReloading)
@@ -128,10 +136,15 @@ namespace OpenWorldDinoSurvival.Weapons
                 }
             }
 
-            ShowTrail(origin, endPoint);
-            NotifyGunfire(origin);
+            PlayShotVisual(origin, endPoint);
             OnFired?.Invoke();
             return true;
+        }
+
+        public void PlayShotVisual(Vector3 origin, Vector3 endPoint)
+        {
+            ShowTrail(origin, endPoint);
+            NotifyGunfire(origin);
         }
 
         private static void NotifyGunfire(Vector3 shotOrigin)

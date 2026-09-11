@@ -1,0 +1,89 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &400000
+GameObject:
+  m_ObjectHideFlags: 0
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 400001}
+  - component: {fileID: 400002}
+  - component: {fileID: 400003}
+  - component: {fileID: 400004}
+  - component: {fileID: 400005}
+  - component: {fileID: 400006}
+  - component: {fileID: 400007}
+  - component: {fileID: 400008}
+  - component: {fileID: 400009}
+  - component: {fileID: 400010}
+  - component: {fileID: 400011}
+  m_Layer: 0
+  m_Name: Velociraptor
+  m_TagString: Untagged
+--- !u!4 &400001
+Transform:
+  m_GameObject: {fileID: 400000}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 12, y: 1, z: 18}
+  m_LocalScale: {x: 1.2, y: 1, z: 1.2}
+--- !u!33 &400002
+MeshFilter:
+  m_GameObject: {fileID: 400000}
+  m_Mesh: {fileID: 10208, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!23 &400003
+MeshRenderer:
+  m_GameObject: {fileID: 400000}
+  m_Enabled: 1
+  m_Materials:
+  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+--- !u!143 &400004
+CharacterController:
+  m_GameObject: {fileID: 400000}
+  m_Height: 2
+  m_Radius: 0.5
+  m_SlopeLimit: 45
+  m_StepOffset: 0.3
+  m_SkinWidth: 0.08
+  m_MinMoveDistance: 0.001
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &400005
+MonoBehaviour:
+  m_GameObject: {fileID: 400000}
+  m_Enabled: 1
+  m_Script: {fileID: 11500000, guid: b6789012345678abcdef050608091011, type: 3}
+--- !u!114 &400006
+MonoBehaviour:
+  m_GameObject: {fileID: 400000}
+  m_Enabled: 1
+  m_Script: {fileID: 11500000, guid: b2c3d4e5f6789012345678abcdef0507, type: 3}
+--- !u!114 &400007
+MonoBehaviour:
+  m_GameObject: {fileID: 400000}
+  m_Enabled: 1
+  m_Script: {fileID: 11500000, guid: a80718293a4b5c6d7e8f091011121801, type: 3}
+--- !u!114 &400008
+MonoBehaviour:
+  m_GameObject: {fileID: 400000}
+  m_Enabled: 1
+  m_Script: {fileID: 11500000, guid: a80718293a4b5c6d7e8f091011121802, type: 3}
+--- !u!114 &400009
+MonoBehaviour:
+  m_GameObject: {fileID: 400000}
+  m_Enabled: 1
+  m_Script: {fileID: 11500000, guid: f60718293a4b5c6d7e8f091011121311, type: 3}
+--- !u!114 &400010
+MonoBehaviour:
+  m_GameObject: {fileID: 400000}
+  m_Enabled: 1
+  m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c7d62f376, type: 3}
+  GlobalObjectIdHash: 1234567892
+  SpawnWithObservers: 1
+--- !u!114 &400011
+MonoBehaviour:
+  m_GameObject: {fileID: 400000}
+  m_Enabled: 1
+  m_Script: {fileID: 11500000, guid: 7c62bbec44fe85848d9a050e1f0975eb, type: 3}
+  SyncPositionX: 1
+  SyncPositionY: 1
+  SyncPositionZ: 1
+  SyncRotAngleY: 1
+  Interpolate: 1

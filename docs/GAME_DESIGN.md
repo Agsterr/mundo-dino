@@ -18,7 +18,7 @@ Mundo aberto perigoso em uma ilha com dinossauros. Jogadores sobrevivem, coopera
 | 2 | Arma + mira + tiro + munição + recarga |
 | 3 | Velociraptor + IA (Idle→Patrol→Detect→Chase→Attack→Search→Return) |
 | 4 | Multiplayer local, 2 jogadores, dano server-side |
-| 5 | Grupos de até 4 jogadores |
+| 5 | Grupos de até 4 jogadores ✅ |
 | 6 | Mapa 2×2 km, regiões, loot, estruturas |
 | 7 | Inventário, comida, água, crafting simples |
 | 8 | Progressão de equipamentos e regiões |

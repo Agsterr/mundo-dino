@@ -1,3 +1,5 @@
+using OpenWorldDinoSurvival.Inventory;
+using OpenWorldDinoSurvival.Loot;
 using OpenWorldDinoSurvival.Systems;
 using UnityEngine;
 
@@ -41,6 +43,25 @@ namespace OpenWorldDinoSurvival.World
 
             Health health = target.AddComponent<Health>();
             health.Initialize(targetHealth);
+
+            LootOnDeath loot = target.AddComponent<LootOnDeath>();
+            loot.SetDrops(new[]
+            {
+                new LootDropEntry
+                {
+                    itemId = ItemIds.ScrapMetal,
+                    amount = 2,
+                    chance = 1f,
+                    color = new Color(0.65f, 0.65f, 0.7f)
+                },
+                new LootDropEntry
+                {
+                    itemId = ItemIds.GunParts,
+                    amount = 1,
+                    chance = 0.35f,
+                    color = new Color(0.75f, 0.75f, 0.8f)
+                }
+            });
         }
     }
 }
