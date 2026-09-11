@@ -4,7 +4,7 @@ using UnityEngine;
 namespace OpenWorldDinoSurvival.Multiplayer
 {
     /// <summary>
-    /// UI simples para Host / Client local (Milestone 4).
+    /// UI para Host / Join em sessões de até 4 jogadores (Milestone 5).
     /// </summary>
     public class ConnectionUI : MonoBehaviour
     {
@@ -27,8 +27,6 @@ namespace OpenWorldDinoSurvival.Multiplayer
 
             if (NetworkManager.Singleton.IsListening)
             {
-                string role = NetworkManager.Singleton.IsHost ? "Host" : "Client";
-                GUI.Label(new Rect(16, 16, 500, 28), $"Multiplayer ativo — {role}", _statusStyle);
                 return;
             }
 
@@ -37,27 +35,30 @@ namespace OpenWorldDinoSurvival.Multiplayer
                 return;
             }
 
-            float width = 280f;
+            float width = 320f;
             float x = Screen.width * 0.5f - width * 0.5f;
-            float y = Screen.height * 0.35f;
+            float y = Screen.height * 0.32f;
 
-            GUI.Label(new Rect(x, y, width, 36), "Mundo Dino — Milestone 4", _titleStyle);
+            GUI.Label(new Rect(x, y, width, 36), "Mundo Dino — até 4 jogadores", _titleStyle);
             y += 44f;
 
-            if (GUI.Button(new Rect(x, y, width, 40), "Host (Jogador 1)", _buttonStyle))
+            if (GUI.Button(new Rect(x, y, width, 40), "Host (criar sessão)", _buttonStyle))
             {
                 StartHost();
             }
 
             y += 48f;
 
-            if (GUI.Button(new Rect(x, y, width, 40), "Client (Jogador 2)", _buttonStyle))
+            if (GUI.Button(new Rect(x, y, width, 40), "Entrar (conectar)", _buttonStyle))
             {
                 StartClient();
             }
 
             y += 52f;
-            GUI.Label(new Rect(x, y, width, 48), "Host: inicia servidor + jogador 1\nClient: conecta em localhost", _statusStyle);
+            GUI.Label(
+                new Rect(x, y, width, 72f),
+                $"Host: inicia servidor + jogador local\nEntrar: conecta em {serverAddress}:{serverPort}\nMáximo de {PlayerSpawnPoints.MaxGroupSize} jogadores por sessão",
+                _statusStyle);
         }
 
         private void StartHost()

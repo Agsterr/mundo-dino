@@ -1,6 +1,4 @@
-using OpenWorldDinoSurvival.Inventory;
 using OpenWorldDinoSurvival.Systems;
-using Unity.Netcode;
 using UnityEngine;
 
 namespace OpenWorldDinoSurvival.Loot
@@ -15,12 +13,10 @@ namespace OpenWorldDinoSurvival.Loot
         }
 
         private Health _health;
-        private GameObject _lootPrefab;
 
         private void Awake()
         {
             _health = GetComponent<Health>();
-            _lootPrefab = Resources.Load<GameObject>("Prefabs/LootPickup");
             if (_health != null)
             {
                 _health.OnDied += HandleDied;
@@ -42,12 +38,6 @@ namespace OpenWorldDinoSurvival.Loot
                 return;
             }
 
-            bool isNetworked = NetworkManager.Singleton != null && NetworkManager.Singleton.IsListening;
-            if (isNetworked && !NetworkManager.Singleton.IsServer)
-            {
-                return;
-            }
-
             Vector3 origin = transform.position + Vector3.up * 0.5f;
             foreach (LootDropEntry drop in drops)
             {
@@ -61,38 +51,8 @@ namespace OpenWorldDinoSurvival.Loot
                     continue;
                 }
 
-                SpawnPickup(drop, origin, isNetworked);
+                LootSpawner.SpawnItem(drop.itemId, drop.amount, origin, drop.color);
             }
-        }
-
-        private void SpawnPickup(LootDropEntry drop, Vector3 origin, bool isNetworked)
-        {
-            Vector3 offset = new Vector3(Random.Range(-0.8f, 0.8f), 0.2f, Random.Range(-0.8f, 0.8f));
-            Vector3 position = origin + offset;
-
-            GameObject pickupObject = _lootPrefab != null
-                ? Instantiate(_lootPrefab, position, Quaternion.identity)
-                : CreateFallbackPickup(position);
-
-            LootPickup pickup = pickupObject.GetComponent<LootPickup>();
-            pickup.Configure(drop.itemId, drop.amount, drop.color);
-
-            if (isNetworked)
-            {
-                NetworkObject networkObject = pickupObject.GetComponent<NetworkObject>();
-                networkObject?.Spawn();
-            }
-        }
-
-        private static GameObject CreateFallbackPickup(Vector3 position)
-        {
-            GameObject pickupObject = GameObject.CreatePrimitive(PrimitiveType.Sphere);
-            pickupObject.transform.position = position;
-            pickupObject.transform.localScale = Vector3.one * 0.45f;
-            pickupObject.GetComponent<SphereCollider>().isTrigger = true;
-            pickupObject.AddComponent<LootPickup>();
-            pickupObject.AddComponent<NetworkObject>();
-            return pickupObject;
         }
     }
 

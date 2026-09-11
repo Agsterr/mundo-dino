@@ -130,8 +130,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a1b2c3d4e5f60718293a4b5c6d7e8f02, type: 3}
   maxHealth: 100
   respawnDelay: 3
-  respawnPosition: {x: 0, y: 1, z: 0}
-  alternateRespawnPosition: {x: 6, y: 1, z: 0}
+  playerSpawns:
+  - {x: 0, y: 1, z: 0}
+  - {x: 6, y: 1, z: 0}
+  - {x: 0, y: 1, z: 6}
+  - {x: 6, y: 1, z: 6}
 --- !u!114 &100009
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -342,8 +345,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 100000}
   m_Enabled: 1
   m_Script: {fileID: 11500000, guid: a1b2c3d4e5f60718293a4b5c6d7e8f01, type: 3}
-  firstPlayerSpawn: {x: 0, y: 1, z: 0}
-  secondPlayerSpawn: {x: 6, y: 1, z: 0}
+  playerSpawns:
+  - {x: 0, y: 1, z: 0}
+  - {x: 6, y: 1, z: 0}
+  - {x: 0, y: 1, z: 6}
+  - {x: 6, y: 1, z: 6}
   inputController: {fileID: 100006}
   movement: {fileID: 100005}
   weaponController: {fileID: 100007}

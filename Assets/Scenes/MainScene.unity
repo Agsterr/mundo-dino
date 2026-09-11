@@ -206,6 +206,8 @@ GameObject:
   - component: {fileID: 5900012345678901238}
   - component: {fileID: 5900012345678901239}
   - component: {fileID: 5900012345678901240}
+  - component: {fileID: 5900012345678901241}
+  - component: {fileID: 5900012345678901242}
   m_Layer: 0
   m_Name: GameSystems
   m_TagString: Untagged
@@ -281,6 +283,18 @@ MonoBehaviour:
   m_GameObject: {fileID: 5900012345678901234}
   m_Enabled: 1
   m_Script: {fileID: 11500000, guid: f60718293a4b5c6d7e8f091011121304, type: 3}
+--- !u!114 &5900012345678901241
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_GameObject: {fileID: 5900012345678901234}
+  m_Enabled: 1
+  m_Script: {fileID: 11500000, guid: b90718293a4b5c6d7e8f091011121903, type: 3}
+--- !u!114 &5900012345678901242
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_GameObject: {fileID: 5900012345678901234}
+  m_Enabled: 1
+  m_Script: {fileID: 11500000, guid: b90718293a4b5c6d7e8f091011121904, type: 3}
 --- !u!1 &7000012345678901234
 GameObject:
   m_ObjectHideFlags: 0
@@ -335,11 +349,12 @@ MonoBehaviour:
       - {fileID: 11400000, guid: b2c3d4e5f60718293a4b5c6d7e8f099, type: 2}
     TickRate: 30
     ClientConnectionBufferTimeout: 10
-    ConnectionApproval: 0
+    ConnectionApproval: 1
     EnableSceneManagement: 1
     ForceSamePrefabs: 1
     RecycleNetworkIds: 1
     NetworkIdRecycleDelay: 120
+  MaxConnectedClients: 4
 --- !u!114 &7000012345678901237
 MonoBehaviour:
   m_ObjectHideFlags: 0

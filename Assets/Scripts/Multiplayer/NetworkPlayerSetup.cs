@@ -15,8 +15,7 @@ namespace OpenWorldDinoSurvival.Multiplayer
     [RequireComponent(typeof(NetworkObject))]
     public class NetworkPlayerSetup : NetworkBehaviour
     {
-        [SerializeField] private Vector3 firstPlayerSpawn = new Vector3(0f, 1f, 0f);
-        [SerializeField] private Vector3 secondPlayerSpawn = new Vector3(6f, 1f, 0f);
+        [SerializeField] private Vector3[] playerSpawns;
 
         [Header("Componentes do dono")]
         [SerializeField] private PlayerInputController inputController;
@@ -127,8 +126,7 @@ namespace OpenWorldDinoSurvival.Multiplayer
 
             if (IsServer)
             {
-                Vector3 spawn = OwnerClientId == 0 ? firstPlayerSpawn : secondPlayerSpawn;
-                transform.position = spawn;
+                transform.position = PlayerSpawnPoints.GetSpawn(OwnerClientId, playerSpawns);
             }
         }
     }

@@ -292,6 +292,41 @@ namespace OpenWorldDinoSurvival.Inventory
             return closest;
         }
 
+        public void DropAllOnDeathServer(Vector3 origin)
+        {
+            if (!IsServer)
+            {
+                return;
+            }
+
+            Vector3 dropOrigin = origin + Vector3.up * 0.5f;
+            DropStack(dropOrigin, ItemIds.ScrapMetal, _scrap.Value);
+            DropStack(dropOrigin, ItemIds.DinoHide, _hide.Value);
+            DropStack(dropOrigin, ItemIds.Fiber, _fiber.Value);
+            DropStack(dropOrigin, ItemIds.GunParts, _gunParts.Value);
+
+            _scrap.Value = 0;
+            _hide.Value = 0;
+            _fiber.Value = 0;
+            _gunParts.Value = 0;
+            _pistolUpgraded.Value = false;
+            _rifleUpgraded.Value = false;
+            _armorTier.Value = 0;
+
+            ApplyWeaponUpgrades();
+            ApplyArmorVisual();
+        }
+
+        private static void DropStack(Vector3 origin, int itemId, int amount)
+        {
+            if (amount <= 0)
+            {
+                return;
+            }
+
+            LootSpawner.SpawnItem(itemId, amount, origin, ItemIds.GetLootColor(itemId));
+        }
+
         private void NotifyChanged(int _, int __) => OnChanged?.Invoke();
     }
 }

@@ -8,9 +8,9 @@ Desenvolver em **pequenas entregas jogáveis**. Nunca implementar sistemas futur
 
 ## Milestone ativa
 
-**Milestone 4 + Crafting + Comunicação + Habilidades** — Multiplayer, crafting, chat/voz, asas, luta melee e dominação de dinossauros.
+**Milestone 5** — Sessões de até 4 jogadores, loot na morte, spawn por jogador.
 
-Próximo: Milestone 5 (grupos de até 4 jogadores).
+Próximo: Milestone 6 (mundo aberto 2×2 km, regiões, estruturas).
 
 ## Regras de código
 
@@ -29,20 +29,20 @@ Assets/Scripts/
 ├── Dinosaurs/    DinosaurStats, DinosaurMountable, DinosaurPlayerControl
 ├── AI/           VelociraptorAI (Idle→Patrol→Chase→Attack→Search→Return)
 ├── Systems/      Health
-├── UI/           WeaponHUD, CraftingHUD, AbilitiesHUD
+├── UI/           WeaponHUD, CraftingHUD, AbilitiesHUD, SessionHUD
 ├── World/        TrainingRangeSetup, DinosaurSpawner
-├── Multiplayer/  NetworkPlayerSetup, NetworkPlayerHealth, NetworkPlayerCombat, ConnectionUI
+├── Multiplayer/  NetworkPlayerSetup, NetworkPlayerHealth, NetworkPlayerCombat, ConnectionUI, PlayerSpawnPoints, NetworkSessionConfig
 ├── Inventory/    ItemIds, PlayerInventory, NetworkPlayerInventory, PlayerCrafting, PlayerArmor, CraftingRecipe
 └── Loot/         LootPickup, LootOnDeath, ResourceNode, ResourceNodeSpawner
 ```
 
-## Como testar (Milestone 4)
+## Como testar (Milestone 5)
 
 1. Unity 2022.3 LTS → `Assets/Scenes/MainScene.unity` → Play
-2. Clique **Host** na primeira instância, **Client** na segunda (build ou ParrelSync)
-3. Atire no outro jogador — dano é calculado no **servidor**
-4. Velociraptor (Host) continua com IA server-side
-5. HUD mostra munição + vida do jogador local
+2. Até 4 instâncias: **Host** na primeira, **Entrar** nas demais
+3. HUD superior direito lista jogadores conectados (0–3)
+4. Morte derruba materiais do inventário no chão
+5. 5º jogador é rejeitado (sessão cheia)
 
 > PvP usa Netcode for GameObjects. Cliente nunca aplica dano diretamente.
 

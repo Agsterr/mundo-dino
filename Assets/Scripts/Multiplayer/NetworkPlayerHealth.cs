@@ -14,8 +14,7 @@ namespace OpenWorldDinoSurvival.Multiplayer
     {
         [SerializeField] private float maxHealth = 100f;
         [SerializeField] private float respawnDelay = 3f;
-        [SerializeField] private Vector3 respawnPosition = new Vector3(0f, 1f, 0f);
-        [SerializeField] private Vector3 alternateRespawnPosition = new Vector3(6f, 1f, 0f);
+        [SerializeField] private Vector3[] playerSpawns;
 
         private readonly NetworkVariable<float> _networkHealth = new(
             100f,
@@ -56,7 +55,7 @@ namespace OpenWorldDinoSurvival.Multiplayer
             if (IsServer)
             {
                 _networkHealth.Value = MaxHealth;
-                _spawnPosition = OwnerClientId == 0 ? respawnPosition : alternateRespawnPosition;
+                _spawnPosition = PlayerSpawnPoints.GetSpawn(OwnerClientId, playerSpawns);
             }
 
             _networkHealth.OnValueChanged += HandleHealthChanged;
@@ -113,6 +112,7 @@ namespace OpenWorldDinoSurvival.Multiplayer
                 _domination?.EndDomination();
             }
 
+            _inventory?.DropAllOnDeathServer(transform.position);
             SetControlsEnabled(false);
             Invoke(nameof(RespawnServer), respawnDelay);
         }
