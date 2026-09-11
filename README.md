@@ -21,7 +21,7 @@ Jogo 3D multiplayer de sobrevivência em mundo aberto com dinossauros, PvP e coo
 ## Como abrir o projeto
 
 ```bash
-git clone https://github.com/Agsterr/open-world-dino-survival.git
+git clone https://github.com/Agsterr/mundo-dino.git
 ```
 
 1. Abra o **Unity Hub**
@@ -114,16 +114,19 @@ MIT — veja [LICENSE](LICENSE).
 
 ## Publicar no GitHub
 
-O projeto já está com `git init` e commits prontos. Crie o repositório no GitHub e envie:
+Repositório: **https://github.com/Agsterr/mundo-dino**
+
+Se você acabou de criar o repo, envie o código local:
 
 ```bash
-# Opção A — GitHub CLI (com sua conta autenticada)
-cd open-world-dino-survival
-./scripts/setup-github-repo.sh
+cd open-world-dino-survival   # pasta do projeto Unity
+git remote set-url origin https://github.com/Agsterr/mundo-dino.git
+git push -u origin main
+```
 
-# Opção B — manual
-# 1. Crie um repo vazio em github.com/new → nome: open-world-dino-survival
-# 2. Execute:
-git remote add origin https://github.com/SEU_USUARIO/open-world-dino-survival.git
+Se o GitHub pedir porque o repo já tem README:
+
+```bash
+git pull origin main --allow-unrelated-histories
 git push -u origin main
 ```

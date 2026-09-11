@@ -4,7 +4,7 @@
 
 set -euo pipefail
 
-REPO="Agsterr/open-world-dino-survival"
+REPO="Agsterr/mundo-dino"
 DESCRIPTION="Jogo 3D multiplayer de sobrevivência em mundo aberto com dinossauros — Unity/C#"
 
 if gh repo view "$REPO" >/dev/null 2>&1; then
