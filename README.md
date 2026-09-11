@@ -1,20 +1,16 @@
-<<<<<<< HEAD
-# mundo-dino
-=======
 # Open World Dino Survival
 
 Jogo 3D multiplayer de sobrevivência em mundo aberto com dinossauros, PvP e cooperação.
 
-**Stack:** Unity 2022.3 LTS · C# · Input System · (futuro) Netcode for GameObjects
+**Stack:** Unity 2022.3 LTS · C# · Input System · Netcode for GameObjects
 
-## Milestone atual: 3 — Velociraptor + IA
+## Milestone atual: 4 — Multiplayer PvP local
 
-- [x] Milestones 1 e 2
-- [x] Velociraptor placeholder (capsule marrom)
-- [x] Vida, ataque corpo-a-corpo e morte
-- [x] IA: Idle → Patrol → Chase → Attack → Search → Return
-- [x] Percepção: visão + som (tiros alertam o raptor)
-- [x] Vida do jogador + respawn
+- [x] Milestones 1, 2 e 3
+- [x] 2 jogadores (Host + Client em localhost)
+- [x] Dano server-side (tiros e vida autoritativos no servidor)
+- [x] Munição e recarga validados no servidor
+- [x] Velociraptor continua funcionando no Host
 
 ## Pré-requisitos
 
@@ -31,7 +27,15 @@ git clone https://github.com/Agsterr/mundo-dino.git
 2. **Add** → selecione a pasta clonada
 3. Abra com **Unity 2022.3 LTS**
 4. Abra a cena `Assets/Scenes/MainScene.unity`
-5. Pressione **Play**
+5. Pressione **Play** → escolha **Host** ou **Client**
+
+### Testar multiplayer (Milestone 4)
+
+1. **Build** ou abra duas instâncias do jogo (Editor + Build, ou ParrelSync)
+2. Instância 1: **Host (Jogador 1)** — spawna em `(0, 1, 0)`
+3. Instância 2: **Client (Jogador 2)** — spawna em `(6, 1, 0)`
+4. Atire no outro jogador — o **servidor** calcula o dano
+5. Morte → respawn em 3 segundos no ponto de spawn
 
 ## Controles
 
@@ -96,7 +100,7 @@ O jogo é construído em milestones pequenas e jogáveis. **Não implemente sist
 | 1 | Personagem andando no mapa 3D |
 | 2 | Atirar (arma, mira, munição, recarga) |
 | 3 | Primeiro dinossauro (Velociraptor + IA) |
-| 4 | PvP (2 jogadores, dano server-side) |
+| 4 | PvP (2 jogadores, dano server-side) ✅ |
 | 5 | Cooperação (grupo de 4) |
 | 6 | Mundo aberto (regiões, loot) |
 | 7 | Sobrevivência (inventário, crafting) |
@@ -142,4 +146,3 @@ Se o GitHub pedir porque o repo já tem README:
 git pull origin main --allow-unrelated-histories
 git push -u origin main
 ```
->>>>>>> unity-src/cursor/unity-milestones-1-3-b85e

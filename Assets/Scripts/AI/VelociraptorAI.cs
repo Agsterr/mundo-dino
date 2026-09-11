@@ -1,6 +1,8 @@
 using OpenWorldDinoSurvival.Dinosaurs;
+using OpenWorldDinoSurvival.Multiplayer;
 using OpenWorldDinoSurvival.Player;
 using OpenWorldDinoSurvival.Systems;
+using Unity.Netcode;
 using UnityEngine;
 
 namespace OpenWorldDinoSurvival.AI
@@ -90,6 +92,11 @@ namespace OpenWorldDinoSurvival.AI
 
         private void Update()
         {
+            if (NetworkManager.Singleton != null && NetworkManager.Singleton.IsListening && !NetworkManager.Singleton.IsServer)
+            {
+                return;
+            }
+
             if (! _health.IsAlive || stats == null)
             {
                 return;
@@ -140,13 +147,57 @@ namespace OpenWorldDinoSurvival.AI
 
         private void RefreshPlayerReference()
         {
-            if (_player == null)
+            if (_player != null)
             {
-                GameObject playerObject = GameObject.FindGameObjectWithTag("Player");
-                if (playerObject != null)
+                NetworkPlayerHealth networkHealth = _player.GetComponent<NetworkPlayerHealth>();
+                if (networkHealth != null && !networkHealth.IsAlive)
                 {
-                    _player = playerObject.transform;
+                    _player = null;
                 }
+                else
+                {
+                    PlayerHealth localHealth = _player.GetComponent<PlayerHealth>();
+                    if (localHealth != null && !localHealth.IsAlive)
+                    {
+                        _player = null;
+                    }
+                }
+            }
+
+            if (_player != null)
+            {
+                return;
+            }
+
+            NetworkPlayerHealth[] networkPlayers = FindObjectsByType<NetworkPlayerHealth>(FindObjectsSortMode.None);
+            Transform closest = null;
+            float closestDistance = float.MaxValue;
+
+            foreach (NetworkPlayerHealth networkPlayer in networkPlayers)
+            {
+                if (!networkPlayer.IsAlive)
+                {
+                    continue;
+                }
+
+                float distance = Vector3.Distance(transform.position, networkPlayer.transform.position);
+                if (distance < closestDistance)
+                {
+                    closestDistance = distance;
+                    closest = networkPlayer.transform;
+                }
+            }
+
+            if (closest != null)
+            {
+                _player = closest;
+                return;
+            }
+
+            GameObject playerObject = GameObject.FindGameObjectWithTag("Player");
+            if (playerObject != null)
+            {
+                _player = playerObject.transform;
             }
         }
 
@@ -284,6 +335,13 @@ namespace OpenWorldDinoSurvival.AI
         {
             if (_player == null)
             {
+                return;
+            }
+
+            NetworkPlayerHealth networkHealth = _player.GetComponent<NetworkPlayerHealth>();
+            if (networkHealth != null && networkHealth.IsAlive)
+            {
+                networkHealth.TakeDamage(stats.attackDamage);
                 return;
             }
 
