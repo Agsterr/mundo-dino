@@ -112,7 +112,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1234567890123456790
 Transform:
   m_ObjectHideFlags: 0
@@ -208,6 +208,7 @@ GameObject:
   - component: {fileID: 5900012345678901240}
   - component: {fileID: 5900012345678901241}
   - component: {fileID: 5900012345678901242}
+  - component: {fileID: 5900012345678901243}
   m_Layer: 0
   m_Name: GameSystems
   m_TagString: Untagged
@@ -237,7 +238,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5900012345678901234}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f6789012345678abcdef050608091015, type: 3}
   m_Name: 
@@ -264,7 +265,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5900012345678901234}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d4e5f6789012345678abcdef05070809, type: 3}
   m_Name: 
@@ -275,7 +276,7 @@ MonoBehaviour:
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_GameObject: {fileID: 5900012345678901234}
-  m_Enabled: 1
+  m_Enabled: 0
   m_Script: {fileID: 11500000, guid: f60718293a4b5c6d7e8f091011121313, type: 3}
 --- !u!114 &5900012345678901240
 MonoBehaviour:
@@ -295,6 +296,15 @@ MonoBehaviour:
   m_GameObject: {fileID: 5900012345678901234}
   m_Enabled: 1
   m_Script: {fileID: 11500000, guid: b90718293a4b5c6d7e8f091011121904, type: 3}
+--- !u!114 &5900012345678901243
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_GameObject: {fileID: 5900012345678901234}
+  m_Enabled: 1
+  m_Script: {fileID: 11500000, guid: c90718293a4b5c6d7e8f091011121903, type: 3}
+  legacyGround: {fileID: 1234567890123456789}
+  velociraptorPrefab: {fileID: 400000, guid: a80718293a4b5c6d7e8f091011121808, type: 3}
+  velociraptorStats: {fileID: 11400000, guid: e5f6789012345678abcdef0507080910, type: 2}
 --- !u!1 &7000012345678901234
 GameObject:
   m_ObjectHideFlags: 0

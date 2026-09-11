@@ -4,15 +4,14 @@ Jogo 3D multiplayer de sobrevivência em mundo aberto com dinossauros, PvP e coo
 
 **Stack:** Unity 2022.3 LTS · C# · Input System · Netcode for GameObjects
 
-## Milestone atual: 5 — Grupos de 4 jogadores
+## Milestone atual: 6 — Mundo aberto 2×2 km
 
-- [x] Milestones 1, 2, 3 e 4
-- [x] Coleta de materiais (E) e drops de inimigos
-- [x] Crafting de armas e armaduras (Tab)
-- [x] Inventário autoritativo no servidor (multiplayer)
-- [x] Asas, luta corpo-a-corpo e dominação de dinossauros
-- [x] Sessões de até **4 jogadores** com spawn individual
-- [x] **Loot na morte** — inventário cai no mundo ao morrer
+- [x] Milestones 1–5
+- [x] Mapa **2 km × 2 km** com 7 regiões exploráveis
+- [x] Estruturas por região (vilarejo, porto, laboratório, etc.)
+- [x] Loot e recursos espalhados pelo mapa
+- [x] 5 Velociraptors em regiões diferentes
+- [x] HUD de região atual
 
 ## Pré-requisitos
 
@@ -61,16 +60,32 @@ git clone https://github.com/Agsterr/mundo-dino.git
 
 > A voz usa microfone do PC e transmissão em tempo real entre os dois jogadores em chamada. Qualidade é de protótipo; para produção considere Vivox.
 
+### Explorar o mundo aberto (Milestone 6)
+
+O mapa tem **2 km × 2 km** centrado na origem. Regiões:
+
+| Região | Localização aproximada |
+|--------|------------------------|
+| Vilarejo | Centro (casas, poço, celeiro) |
+| Rio | Faixa central (Z ≈ 0) |
+| Floresta | Oeste (árvores, acampamento) |
+| Montanha | Norte (rochas) |
+| Praia | Sul (acampamentos) |
+| Porto | Sudeste (doca, armazém) |
+| Laboratório | Nordeste (prédio, antena) |
+
+O HUD superior esquerdo mostra sua **região atual** conforme você explora.
+
 ### Testar multiplayer (Milestone 5 — até 4 jogadores)
 
 1. **Build** ou abra até 4 instâncias (Editor + Builds, ou ParrelSync)
 2. Instância 1: **Host (criar sessão)**
 3. Instâncias 2–4: **Entrar (conectar)** em `127.0.0.1:7777`
-4. Cada jogador spawna em um canto do mapa:
-   - Jogador 0 → `(0, 1, 0)`
-   - Jogador 1 → `(6, 1, 0)`
-   - Jogador 2 → `(0, 1, 6)`
-   - Jogador 3 → `(6, 1, 6)`
+4. Cada jogador spawna no **Vilarejo** (norte do rio):
+   - Jogador 0 → `(-40, 1, 120)`
+   - Jogador 1 → `(40, 1, 120)`
+   - Jogador 2 → `(-40, 1, 180)`
+   - Jogador 3 → `(40, 1, 180)`
 5. HUD no canto superior direito mostra jogadores conectados
 6. Atire em outro jogador — dano calculado no **servidor**
 7. **Morte:** inventário (materiais) cai no chão; upgrades craftados são perdidos; respawn em 3 s
@@ -163,7 +178,7 @@ O jogo é construído em milestones pequenas e jogáveis. **Não implemente sist
 | 3 | Primeiro dinossauro (Velociraptor + IA) |
 | 4 | PvP (2 jogadores, dano server-side) ✅ |
 | 5 | Cooperação (grupo de 4) ✅ |
-| 6 | Mundo aberto (regiões, loot) |
+| 6 | Mundo aberto (regiões, loot) ✅ |
 | 7 | Sobrevivência (inventário, crafting) |
 | 8 | Progressão |
 | 9 | Servidor persistente |

@@ -31,6 +31,7 @@ namespace OpenWorldDinoSurvival.Multiplayer
         [SerializeField] private ChatHUD chatHud;
         [SerializeField] private VoiceCallHUD voiceCallHud;
         [SerializeField] private AbilitiesHUD abilitiesHud;
+        [SerializeField] private RegionHUD regionHud;
 
         private void Reset()
         {
@@ -47,6 +48,7 @@ namespace OpenWorldDinoSurvival.Multiplayer
             chatHud = GetComponent<ChatHUD>();
             voiceCallHud = GetComponent<VoiceCallHUD>();
             abilitiesHud = GetComponent<AbilitiesHUD>();
+            regionHud = GetComponent<RegionHUD>();
         }
 
         public override void OnNetworkSpawn()
@@ -116,6 +118,11 @@ namespace OpenWorldDinoSurvival.Multiplayer
             if (abilitiesHud != null)
             {
                 abilitiesHud.enabled = isOwner;
+            }
+
+            if (regionHud != null)
+            {
+                regionHud.enabled = isOwner;
             }
 
             if (isOwner)

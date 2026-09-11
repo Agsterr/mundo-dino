@@ -8,9 +8,9 @@ Desenvolver em **pequenas entregas jogáveis**. Nunca implementar sistemas futur
 
 ## Milestone ativa
 
-**Milestone 5** — Sessões de até 4 jogadores, loot na morte, spawn por jogador.
+**Milestone 6** — Mapa 2×2 km, 7 regiões, estruturas, loot espalhado, RegionHUD.
 
-Próximo: Milestone 6 (mundo aberto 2×2 km, regiões, estruturas).
+Próximo: Milestone 7 (comida, água, sobrevivência completa).
 
 ## Regras de código
 
@@ -29,8 +29,8 @@ Assets/Scripts/
 ├── Dinosaurs/    DinosaurStats, DinosaurMountable, DinosaurPlayerControl
 ├── AI/           VelociraptorAI (Idle→Patrol→Chase→Attack→Search→Return)
 ├── Systems/      Health
-├── UI/           WeaponHUD, CraftingHUD, AbilitiesHUD, SessionHUD
-├── World/        TrainingRangeSetup, DinosaurSpawner
+├── UI/           WeaponHUD, CraftingHUD, AbilitiesHUD, SessionHUD, RegionHUD
+├── World/        OpenWorldGenerator, WorldRegions, RegionTracker, TrainingRangeSetup, DinosaurSpawner
 ├── Multiplayer/  NetworkPlayerSetup, NetworkPlayerHealth, NetworkPlayerCombat, ConnectionUI, PlayerSpawnPoints, NetworkSessionConfig
 ├── Inventory/    ItemIds, PlayerInventory, NetworkPlayerInventory, PlayerCrafting, PlayerArmor, CraftingRecipe
 └── Loot/         LootPickup, LootOnDeath, ResourceNode, ResourceNodeSpawner

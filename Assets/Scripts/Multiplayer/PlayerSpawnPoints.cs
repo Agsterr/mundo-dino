@@ -11,10 +11,10 @@ namespace OpenWorldDinoSurvival.Multiplayer
 
         private static readonly Vector3[] DefaultSpawns =
         {
-            new Vector3(0f, 1f, 0f),
-            new Vector3(6f, 1f, 0f),
-            new Vector3(0f, 1f, 6f),
-            new Vector3(6f, 1f, 6f),
+            new Vector3(-40f, 1f, 120f),
+            new Vector3(40f, 1f, 120f),
+            new Vector3(-40f, 1f, 180f),
+            new Vector3(40f, 1f, 180f),
         };
 
         public static Vector3 GetSpawn(ulong clientId, Vector3[] customSpawns = null)
