@@ -120,27 +120,33 @@ export function App() {
         <section className="panel form-panel">
           <h2>Adicionar dinossauro</h2>
           <form onSubmit={handleSubmit} className="form">
-            <label>
+            <label htmlFor="dino-name">
               Nome
               <input
+                id="dino-name"
+                name="name"
                 value={form.name}
                 onChange={(e) => setForm({ ...form, name: e.target.value })}
                 placeholder="Ex: Denver"
                 required
               />
             </label>
-            <label>
+            <label htmlFor="dino-species">
               Espécie
               <input
+                id="dino-species"
+                name="species"
                 value={form.species}
                 onChange={(e) => setForm({ ...form, species: e.target.value })}
                 placeholder="Ex: Corythosaurus"
                 required
               />
             </label>
-            <label>
+            <label htmlFor="dino-period">
               Período
               <input
+                id="dino-period"
+                name="period"
                 value={form.period}
                 onChange={(e) => setForm({ ...form, period: e.target.value })}
                 placeholder="Ex: Cretáceo"
@@ -148,9 +154,11 @@ export function App() {
               />
             </label>
             <div className="row">
-              <label>
+              <label htmlFor="dino-diet">
                 Dieta
                 <select
+                  id="dino-diet"
+                  name="diet"
                   value={form.diet}
                   onChange={(e) => setForm({ ...form, diet: e.target.value as Diet })}
                 >
@@ -159,9 +167,11 @@ export function App() {
                   <option value="onivoro">Onívoro</option>
                 </select>
               </label>
-              <label>
+              <label htmlFor="dino-length">
                 Tamanho (m)
                 <input
+                  id="dino-length"
+                  name="lengthMeters"
                   type="number"
                   min={0.1}
                   step={0.1}
@@ -172,18 +182,22 @@ export function App() {
                   required
                 />
               </label>
-              <label className="emoji-field">
+              <label className="emoji-field" htmlFor="dino-emoji">
                 Emoji
                 <input
+                  id="dino-emoji"
+                  name="emoji"
                   value={form.emoji}
                   onChange={(e) => setForm({ ...form, emoji: e.target.value })}
                   maxLength={4}
                 />
               </label>
             </div>
-            <label>
+            <label htmlFor="dino-fact">
               Curiosidade
               <textarea
+                id="dino-fact"
+                name="funFact"
                 value={form.funFact}
                 onChange={(e) => setForm({ ...form, funFact: e.target.value })}
                 placeholder="Conte algo interessante sobre esse dino"
