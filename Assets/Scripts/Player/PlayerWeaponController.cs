@@ -1,3 +1,4 @@
+using OpenWorldDinoSurvival.Multiplayer;
 using OpenWorldDinoSurvival.Weapons;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -14,6 +15,8 @@ namespace OpenWorldDinoSurvival.Player
 
         private Weapon _activeWeapon;
         private bool _fireHeld;
+        private NetworkPlayerCombat _networkCombat;
+        private bool _networkReloading;
 
         public Weapon ActiveWeapon => _activeWeapon;
 
@@ -68,6 +71,43 @@ namespace OpenWorldDinoSurvival.Player
             return weapon;
         }
 
+        public void SetNetworkHandler(NetworkPlayerCombat combat)
+        {
+            _networkCombat = combat;
+        }
+
+        public void ClearNetworkHandler()
+        {
+            _networkCombat = null;
+        }
+
+        public void ApplyNetworkAmmo(
+            int activeWeaponIndex,
+            int pistolMagazine,
+            int pistolReserve,
+            int rifleMagazine,
+            int rifleReserve,
+            bool isReloading)
+        {
+            _networkReloading = isReloading;
+
+            if (pistol != null)
+            {
+                pistol.SetAmmoState(pistolMagazine, pistolReserve, isReloading && activeWeaponIndex == 0);
+            }
+
+            if (rifle != null)
+            {
+                rifle.SetAmmoState(rifleMagazine, rifleReserve, isReloading && activeWeaponIndex == 1);
+            }
+
+            Weapon target = activeWeaponIndex == 0 ? pistol : rifle;
+            if (target != null && target != _activeWeapon)
+            {
+                EquipWeapon(target);
+            }
+        }
+
         private void Update()
         {
             if (_activeWeapon == null || !_fireHeld)
@@ -78,7 +118,7 @@ namespace OpenWorldDinoSurvival.Player
             WeaponStats stats = _activeWeapon.Stats;
             if (stats != null && stats.automatic)
             {
-                _activeWeapon.TryFire(aimCamera);
+                TryFireActiveWeapon();
             }
         }
 
@@ -94,31 +134,97 @@ namespace OpenWorldDinoSurvival.Player
             WeaponStats stats = _activeWeapon.Stats;
             if (stats != null && !stats.automatic)
             {
-                _activeWeapon.TryFire(aimCamera);
+                TryFireActiveWeapon();
             }
         }
 
         public void OnReload(InputAction.CallbackContext context)
         {
-            if (context.performed && _activeWeapon != null)
+            if (!context.performed || _activeWeapon == null)
             {
-                _activeWeapon.TryReload();
+                return;
             }
+
+            if (_networkCombat != null)
+            {
+                _networkCombat.RequestReload();
+                return;
+            }
+
+            _activeWeapon.TryReload();
         }
 
         public void OnSwitchPistol(InputAction.CallbackContext context)
         {
-            if (context.performed)
+            if (!context.performed)
             {
-                EquipWeapon(pistol);
+                return;
             }
+
+            if (_networkCombat != null)
+            {
+                _networkCombat.RequestSwitchWeapon(0);
+                return;
+            }
+
+            EquipWeapon(pistol);
         }
 
         public void OnSwitchRifle(InputAction.CallbackContext context)
         {
-            if (context.performed)
+            if (!context.performed)
             {
-                EquipWeapon(rifle);
+                return;
+            }
+
+            if (_networkCombat != null)
+            {
+                _networkCombat.RequestSwitchWeapon(1);
+                return;
+            }
+
+            EquipWeapon(rifle);
+        }
+
+        private void TryFireActiveWeapon()
+        {
+            if (_activeWeapon == null)
+            {
+                return;
+            }
+
+            if (_networkCombat != null)
+            {
+                if (!_networkReloading)
+                {
+                    _networkCombat.RequestFire(aimCamera);
+                }
+
+                return;
+            }
+
+            _activeWeapon.TryFire(aimCamera);
+        }
+
+        public void ApplyWeaponUpgrade(int weaponSlot, WeaponStats stats)
+        {
+            if (stats == null)
+            {
+                return;
+            }
+
+            if (weaponSlot == 0 && pistol != null)
+            {
+                pistol.SetStats(stats);
+            }
+            else if (weaponSlot == 1 && rifle != null)
+            {
+                rifle.SetStats(stats);
+            }
+
+            if (_activeWeapon != null && _activeWeapon.Stats == stats)
+            {
+                OnWeaponChanged?.Invoke(_activeWeapon);
             }
         }
 

@@ -1,3 +1,5 @@
+using OpenWorldDinoSurvival.Inventory;
+using OpenWorldDinoSurvival.UI;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -11,12 +13,22 @@ namespace OpenWorldDinoSurvival.Player
         [SerializeField] private PlayerMovement movement;
         [SerializeField] private ThirdPersonCamera cameraController;
         [SerializeField] private PlayerWeaponController weaponController;
+        [SerializeField] private PlayerInteractor interactor;
+        [SerializeField] private CraftingHUD craftingHud;
 
         private void Reset()
         {
             movement = GetComponent<PlayerMovement>();
             cameraController = GetComponentInChildren<ThirdPersonCamera>();
             weaponController = GetComponent<PlayerWeaponController>();
+            interactor = GetComponent<PlayerInteractor>();
+            craftingHud = GetComponent<CraftingHUD>();
+        }
+
+        private void Awake()
+        {
+            interactor ??= GetComponent<PlayerInteractor>();
+            craftingHud ??= GetComponent<CraftingHUD>();
         }
 
         public void OnMove(InputAction.CallbackContext context) => movement.OnMove(context);
@@ -27,5 +39,21 @@ namespace OpenWorldDinoSurvival.Player
         public void OnReload(InputAction.CallbackContext context) => weaponController.OnReload(context);
         public void OnSwitchPistol(InputAction.CallbackContext context) => weaponController.OnSwitchPistol(context);
         public void OnSwitchRifle(InputAction.CallbackContext context) => weaponController.OnSwitchRifle(context);
+
+        public void OnInteract(InputAction.CallbackContext context)
+        {
+            if (context.performed)
+            {
+                interactor?.TryInteract();
+            }
+        }
+
+        public void OnCraftMenu(InputAction.CallbackContext context)
+        {
+            if (context.performed)
+            {
+                craftingHud?.ToggleMenu();
+            }
+        }
     }
 }

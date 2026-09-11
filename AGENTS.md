@@ -8,9 +8,9 @@ Desenvolver em **pequenas entregas jogáveis**. Nunca implementar sistemas futur
 
 ## Milestone ativa
 
-**Milestone 3** — Velociraptor com IA básica.
+**Milestone 4 + Crafting** — Multiplayer PvP + coleta/crafting de armas e armaduras.
 
-Próximo: Milestone 4 (multiplayer PvP, dano server-side).
+Próximo: Milestone 5 (grupos de até 4 jogadores).
 
 ## Regras de código
 
@@ -31,20 +31,20 @@ Assets/Scripts/
 ├── Systems/      Health
 ├── UI/           WeaponHUD (munição, vida, mira)
 ├── World/        TrainingRangeSetup, DinosaurSpawner
-├── Multiplayer/  (Milestone 4+)
-├── Inventory/    (Milestone 7)
-└── Loot/         (Milestone 6)
+├── Multiplayer/  NetworkPlayerSetup, NetworkPlayerHealth, NetworkPlayerCombat, ConnectionUI
+├── Inventory/    ItemIds, PlayerInventory, NetworkPlayerInventory, PlayerCrafting, PlayerArmor, CraftingRecipe
+└── Loot/         LootPickup, LootOnDeath, ResourceNode, ResourceNodeSpawner
 ```
 
-## Como testar (Milestone 3)
+## Como testar (Milestone 4)
 
 1. Unity 2022.3 LTS → `Assets/Scenes/MainScene.unity` → Play
-2. Velociraptor spawna em `(12, 1, 18)` — patrulha a área
-3. Aproxime ou atire para alertá-lo
-4. Mate o raptor (150 HP) ou seja atacado (20 dano, respawn 3s)
-5. HUD mostra munição + vida do jogador
+2. Clique **Host** na primeira instância, **Client** na segunda (build ou ParrelSync)
+3. Atire no outro jogador — dano é calculado no **servidor**
+4. Velociraptor (Host) continua com IA server-side
+5. HUD mostra munição + vida do jogador local
 
-> Dano é local até o Milestone 4 (multiplayer server-authoritative).
+> PvP usa Netcode for GameObjects. Cliente nunca aplica dano diretamente.
 
 ## Unity
 

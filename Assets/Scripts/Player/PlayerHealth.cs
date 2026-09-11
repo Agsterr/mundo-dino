@@ -1,4 +1,5 @@
 using System;
+using OpenWorldDinoSurvival.Inventory;
 using UnityEngine;
 
 namespace OpenWorldDinoSurvival.Player
@@ -15,9 +16,10 @@ namespace OpenWorldDinoSurvival.Player
         private PlayerWeaponController _weaponController;
         private PlayerInputController _inputController;
         private CharacterController _controller;
+        private PlayerArmor _armor;
 
         public float CurrentHealth => _currentHealth;
-        public float MaxHealth => maxHealth;
+        public float MaxHealth => maxHealth + (_armor != null ? _armor.HealthBonus : 0f);
         public bool IsAlive => _currentHealth > 0f;
 
         public event Action<float> OnDamaged;
@@ -32,6 +34,7 @@ namespace OpenWorldDinoSurvival.Player
             _weaponController = GetComponent<PlayerWeaponController>();
             _inputController = GetComponent<PlayerInputController>();
             _controller = GetComponent<CharacterController>();
+            _armor = GetComponent<PlayerArmor>();
         }
 
         public void TakeDamage(float amount)
@@ -41,7 +44,9 @@ namespace OpenWorldDinoSurvival.Player
                 return;
             }
 
-            _currentHealth = Mathf.Max(0f, _currentHealth - amount);
+            float reduction = _armor != null ? _armor.DamageReduction : 0f;
+            float finalDamage = amount * (1f - reduction);
+            _currentHealth = Mathf.Max(0f, _currentHealth - finalDamage);
             OnDamaged?.Invoke(amount);
 
             if (!IsAlive)
