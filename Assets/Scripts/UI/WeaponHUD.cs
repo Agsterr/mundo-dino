@@ -10,16 +10,23 @@ namespace OpenWorldDinoSurvival.UI
     public class WeaponHUD : MonoBehaviour
     {
         [SerializeField] private PlayerWeaponController weaponController;
+        [SerializeField] private PlayerHealth playerHealth;
 
         private Weapon _trackedWeapon;
         private GUIStyle _labelStyle;
         private GUIStyle _crosshairStyle;
+        private GUIStyle _healthStyle;
 
         private void Awake()
         {
             if (weaponController == null)
             {
                 weaponController = FindFirstObjectByType<PlayerWeaponController>();
+            }
+
+            if (playerHealth == null)
+            {
+                playerHealth = FindFirstObjectByType<PlayerHealth>();
             }
         }
 
@@ -89,6 +96,14 @@ namespace OpenWorldDinoSurvival.UI
                 $"{stats.weaponName}: {_trackedWeapon.AmmoInMagazine} / {_trackedWeapon.ReserveAmmo}{reload}",
                 _labelStyle);
 
+            if (playerHealth != null)
+            {
+                string lifeText = playerHealth.IsAlive
+                    ? $"Vida: {Mathf.CeilToInt(playerHealth.CurrentHealth)} / {Mathf.CeilToInt(playerHealth.MaxHealth)}"
+                    : "Você morreu — respawn em breve...";
+                GUI.Label(new Rect(16, 44, 400, 28), lifeText, _healthStyle);
+            }
+
             DrawCrosshair();
         }
 
@@ -119,6 +134,13 @@ namespace OpenWorldDinoSurvival.UI
                 fontSize = 22,
                 alignment = TextAnchor.MiddleCenter,
                 normal = { textColor = new Color(1f, 1f, 1f, 0.85f) }
+            };
+
+            _healthStyle = new GUIStyle(GUI.skin.label)
+            {
+                fontSize = 15,
+                fontStyle = FontStyle.Bold,
+                normal = { textColor = new Color(0.4f, 1f, 0.5f) }
             };
         }
     }

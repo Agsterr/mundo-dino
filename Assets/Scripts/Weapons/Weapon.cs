@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using OpenWorldDinoSurvival.AI;
 using OpenWorldDinoSurvival.Systems;
 using UnityEngine;
 
@@ -128,8 +129,18 @@ namespace OpenWorldDinoSurvival.Weapons
             }
 
             ShowTrail(origin, endPoint);
+            NotifyGunfire(origin);
             OnFired?.Invoke();
             return true;
+        }
+
+        private static void NotifyGunfire(Vector3 shotOrigin)
+        {
+            VelociraptorAI[] raptors = FindObjectsByType<VelociraptorAI>(FindObjectsSortMode.None);
+            foreach (VelociraptorAI raptor in raptors)
+            {
+                raptor.AlertToGunfire(shotOrigin);
+            }
         }
 
         public bool TryReload()

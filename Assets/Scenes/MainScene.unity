@@ -208,6 +208,7 @@ GameObject:
   - component: {fileID: 2345678901234567897}
   - component: {fileID: 2345678901234567898}
   - component: {fileID: 4567890123456789012}
+  - component: {fileID: 4567890123456789013}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -349,6 +350,21 @@ MonoBehaviour:
   rifle: {fileID: 0}
   pistolStats: {fileID: 11400000, guid: d6789012345678abcdef050608091013, type: 2}
   rifleStats: {fileID: 11400000, guid: e6789012345678abcdef050608091014, type: 2}
+--- !u!114 &4567890123456789013
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2345678901234567890}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c3d4e5f6789012345678abcdef050708, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxHealth: 100
+  respawnDelay: 3
+  respawnPosition: {x: 0, y: 1, z: 0}
 --- !u!114 &2345678901234567898
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -629,6 +645,7 @@ GameObject:
   - component: {fileID: 5900012345678901235}
   - component: {fileID: 5900012345678901236}
   - component: {fileID: 5900012345678901237}
+  - component: {fileID: 5900012345678901238}
   m_Layer: 0
   m_Name: GameSystems
   m_TagString: Untagged
@@ -677,6 +694,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   weaponController: {fileID: 4567890123456789012}
+--- !u!114 &5900012345678901238
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5900012345678901234}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d4e5f6789012345678abcdef05070809, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  spawnPosition: {x: 12, y: 1, z: 18}
+  stats: {fileID: 11400000, guid: e5f6789012345678abcdef0507080910, type: 2}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

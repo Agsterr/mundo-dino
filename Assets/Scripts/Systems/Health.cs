@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 namespace OpenWorldDinoSurvival.Systems
@@ -12,6 +13,9 @@ namespace OpenWorldDinoSurvival.Systems
         public float CurrentHealth => _currentHealth;
         public float MaxHealth => maxHealth;
         public bool IsAlive => _currentHealth > 0f;
+
+        public event Action<float> OnDamaged;
+        public event Action OnDied;
 
         private void Awake()
         {
@@ -32,6 +36,7 @@ namespace OpenWorldDinoSurvival.Systems
             }
 
             _currentHealth = Mathf.Max(0f, _currentHealth - amount);
+            OnDamaged?.Invoke(amount);
 
             if (!IsAlive)
             {
@@ -41,6 +46,8 @@ namespace OpenWorldDinoSurvival.Systems
 
         private void Die()
         {
+            OnDied?.Invoke();
+
             if (destroyOnDeath)
             {
                 Destroy(gameObject);
