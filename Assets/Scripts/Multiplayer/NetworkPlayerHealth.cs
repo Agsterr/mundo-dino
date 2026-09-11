@@ -1,4 +1,5 @@
 using System;
+using OpenWorldDinoSurvival.Inventory;
 using OpenWorldDinoSurvival.Player;
 using Unity.Netcode;
 using UnityEngine;
@@ -26,8 +27,10 @@ namespace OpenWorldDinoSurvival.Multiplayer
         private PlayerWeaponController _weaponController;
         private PlayerInputController _inputController;
         private CharacterController _controller;
+        private NetworkPlayerInventory _inventory;
+
         public float CurrentHealth => _networkHealth.Value;
-        public float MaxHealth => maxHealth;
+        public float MaxHealth => maxHealth + (_inventory != null ? _inventory.HealthBonus : 0f);
         public bool IsAlive => _networkHealth.Value > 0f;
 
         public event Action<float> OnDamaged;
@@ -41,13 +44,14 @@ namespace OpenWorldDinoSurvival.Multiplayer
             _weaponController = GetComponent<PlayerWeaponController>();
             _inputController = GetComponent<PlayerInputController>();
             _controller = GetComponent<CharacterController>();
+            _inventory = GetComponent<NetworkPlayerInventory>();
         }
 
         public override void OnNetworkSpawn()
         {
             if (IsServer)
             {
-                _networkHealth.Value = maxHealth;
+                _networkHealth.Value = MaxHealth;
                 _spawnPosition = OwnerClientId == 0 ? respawnPosition : alternateRespawnPosition;
             }
 
@@ -66,7 +70,9 @@ namespace OpenWorldDinoSurvival.Multiplayer
                 return;
             }
 
-            _networkHealth.Value = Mathf.Max(0f, _networkHealth.Value - amount);
+            float reduction = _inventory != null ? _inventory.DamageReduction : 0f;
+            float finalDamage = amount * (1f - reduction);
+            _networkHealth.Value = Mathf.Max(0f, _networkHealth.Value - finalDamage);
 
             if (!IsAlive)
             {

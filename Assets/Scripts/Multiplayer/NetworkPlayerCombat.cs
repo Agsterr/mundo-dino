@@ -1,4 +1,5 @@
 using OpenWorldDinoSurvival.AI;
+using OpenWorldDinoSurvival.Inventory;
 using OpenWorldDinoSurvival.Player;
 using OpenWorldDinoSurvival.Systems;
 using OpenWorldDinoSurvival.Weapons;
@@ -14,6 +15,7 @@ namespace OpenWorldDinoSurvival.Multiplayer
     public class NetworkPlayerCombat : NetworkBehaviour
     {
         [SerializeField] private PlayerWeaponController weaponController;
+        [SerializeField] private NetworkPlayerInventory inventory;
         [SerializeField] private Weapon pistol;
         [SerializeField] private Weapon rifle;
         [SerializeField] private LayerMask hitMask = ~0;
@@ -25,8 +27,10 @@ namespace OpenWorldDinoSurvival.Multiplayer
         private readonly NetworkVariable<int> _activeWeaponIndex = new(0, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Server);
         private readonly NetworkVariable<bool> _isReloading = new(false, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Server);
 
-        private WeaponStats _pistolStats;
-        private WeaponStats _rifleStats;
+        private WeaponStats _defaultPistolStats;
+        private WeaponStats _defaultRifleStats;
+        private WeaponStats _craftedPistolStats;
+        private WeaponStats _craftedRifleStats;
         private float _nextPistolFireTime;
         private float _nextRifleFireTime;
         private int _reloadingWeaponIndex;
@@ -45,9 +49,44 @@ namespace OpenWorldDinoSurvival.Multiplayer
         private void Awake()
         {
             weaponController ??= GetComponent<PlayerWeaponController>();
-            _pistolStats = Resources.Load<WeaponStats>("Weapons/PistolStats");
-            _rifleStats = Resources.Load<WeaponStats>("Weapons/RifleStats");
+            inventory ??= GetComponent<NetworkPlayerInventory>();
+            _defaultPistolStats = Resources.Load<WeaponStats>("Weapons/PistolStats");
+            _defaultRifleStats = Resources.Load<WeaponStats>("Weapons/RifleStats");
+            _craftedPistolStats = Resources.Load<WeaponStats>("Weapons/CraftedPistolStats");
+            _craftedRifleStats = Resources.Load<WeaponStats>("Weapons/CraftedRifleStats");
             pistol ??= weaponController != null ? weaponController.ActiveWeapon : null;
+        }
+
+        public void RefreshWeaponStats()
+        {
+            if (weaponController == null)
+            {
+                return;
+            }
+
+            if (inventory != null && inventory.PistolUpgraded && _craftedPistolStats != null)
+            {
+                weaponController.ApplyWeaponUpgrade(0, _craftedPistolStats);
+            }
+
+            if (inventory != null && inventory.RifleUpgraded && _craftedRifleStats != null)
+            {
+                weaponController.ApplyWeaponUpgrade(1, _craftedRifleStats);
+            }
+        }
+
+        private WeaponStats GetWeaponStats(int weaponIndex)
+        {
+            if (weaponIndex == 0)
+            {
+                return inventory != null && inventory.PistolUpgraded && _craftedPistolStats != null
+                    ? _craftedPistolStats
+                    : _defaultPistolStats;
+            }
+
+            return inventory != null && inventory.RifleUpgraded && _craftedRifleStats != null
+                ? _craftedRifleStats
+                : _defaultRifleStats;
         }
 
         public override void OnNetworkSpawn()
@@ -85,16 +124,19 @@ namespace OpenWorldDinoSurvival.Multiplayer
 
         private void ResetServerAmmo()
         {
-            if (_pistolStats != null)
+            WeaponStats pistolStats = GetWeaponStats(0);
+            WeaponStats rifleStats = GetWeaponStats(1);
+
+            if (pistolStats != null)
             {
-                _pistolMagazine.Value = _pistolStats.magazineSize;
-                _pistolReserve.Value = _pistolStats.maxReserveAmmo;
+                _pistolMagazine.Value = pistolStats.magazineSize;
+                _pistolReserve.Value = pistolStats.maxReserveAmmo;
             }
 
-            if (_rifleStats != null)
+            if (rifleStats != null)
             {
-                _rifleMagazine.Value = _rifleStats.magazineSize;
-                _rifleReserve.Value = _rifleStats.maxReserveAmmo;
+                _rifleMagazine.Value = rifleStats.magazineSize;
+                _rifleReserve.Value = rifleStats.maxReserveAmmo;
             }
 
             _activeWeaponIndex.Value = 0;
@@ -143,7 +185,7 @@ namespace OpenWorldDinoSurvival.Multiplayer
                 return;
             }
 
-            WeaponStats stats = weaponIndex == 0 ? _pistolStats : _rifleStats;
+            WeaponStats stats = GetWeaponStats(weaponIndex);
             if (stats == null)
             {
                 return;
@@ -192,7 +234,7 @@ namespace OpenWorldDinoSurvival.Multiplayer
                 return;
             }
 
-            WeaponStats stats = weaponIndex == 0 ? _pistolStats : _rifleStats;
+            WeaponStats stats = GetWeaponStats(weaponIndex);
             if (stats == null)
             {
                 return;
@@ -229,7 +271,7 @@ namespace OpenWorldDinoSurvival.Multiplayer
             }
 
             int weaponIndex = _reloadingWeaponIndex;
-            WeaponStats stats = weaponIndex == 0 ? _pistolStats : _rifleStats;
+            WeaponStats stats = GetWeaponStats(weaponIndex);
             if (stats == null)
             {
                 _isReloading.Value = false;

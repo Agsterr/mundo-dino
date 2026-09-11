@@ -206,6 +206,28 @@ namespace OpenWorldDinoSurvival.Player
             _activeWeapon.TryFire(aimCamera);
         }
 
+        public void ApplyWeaponUpgrade(int weaponSlot, WeaponStats stats)
+        {
+            if (stats == null)
+            {
+                return;
+            }
+
+            if (weaponSlot == 0 && pistol != null)
+            {
+                pistol.SetStats(stats);
+            }
+            else if (weaponSlot == 1 && rifle != null)
+            {
+                rifle.SetStats(stats);
+            }
+
+            if (_activeWeapon != null && _activeWeapon.Stats == stats)
+            {
+                OnWeaponChanged?.Invoke(_activeWeapon);
+            }
+        }
+
         private void EquipWeapon(Weapon weapon)
         {
             if (weapon == null || weapon == _activeWeapon)

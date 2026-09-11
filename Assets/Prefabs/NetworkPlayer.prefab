@@ -22,6 +22,10 @@ GameObject:
   - component: {fileID: 100012}
   - component: {fileID: 100013}
   - component: {fileID: 100014}
+  - component: {fileID: 100016}
+  - component: {fileID: 100017}
+  - component: {fileID: 100018}
+  - component: {fileID: 100019}
   m_Layer: 0
   m_Name: NetworkPlayer
   m_TagString: Player
@@ -196,6 +200,24 @@ MonoBehaviour:
         m_CallState: 2
     m_ActionId: c9d0e1f2-a3b4-5678-2345-678901234568
     m_ActionName: Player/SwitchRifle
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 100006}
+        m_TargetAssemblyTypeName: OpenWorldDinoSurvival.Player.PlayerInputController, Assembly-CSharp
+        m_MethodName: OnInteract
+        m_Mode: 0
+        m_CallState: 2
+    m_ActionId: d0e1f2a3-b4c5-6789-3456-890123456790
+    m_ActionName: Player/Interact
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 100006}
+        m_TargetAssemblyTypeName: OpenWorldDinoSurvival.Player.PlayerInputController, Assembly-CSharp
+        m_MethodName: OnCraftMenu
+        m_Mode: 0
+        m_CallState: 2
+    m_ActionId: e1f2a3b4-c5d6-7890-4567-901234567891
+    m_ActionName: Player/CraftMenu
   m_DefaultActionMap: Player
 --- !u!114 &100010
 MonoBehaviour:
@@ -236,6 +258,8 @@ MonoBehaviour:
   audioListener: {fileID: 200003}
   thirdPersonCamera: {fileID: 200004}
   weaponHud: {fileID: 100014}
+  craftingHud: {fileID: 100019}
+  interactor: {fileID: 100018}
 --- !u!114 &100013
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -243,6 +267,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_Script: {fileID: 11500000, guid: a1b2c3d4e5f60718293a4b5c6d7e8f03, type: 3}
   weaponController: {fileID: 100007}
+  inventory: {fileID: 100016}
 --- !u!114 &100014
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -251,6 +276,33 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c6789012345678abcdef050608091012, type: 3}
   weaponController: {fileID: 100007}
   networkPlayerHealth: {fileID: 100008}
+--- !u!114 &100016
+MonoBehaviour:
+  m_GameObject: {fileID: 100000}
+  m_Enabled: 1
+  m_Script: {fileID: 11500000, guid: f60718293a4b5c6d7e8f091011121308, type: 3}
+  armor: {fileID: 100017}
+  weaponController: {fileID: 100007}
+  combat: {fileID: 100013}
+--- !u!114 &100017
+MonoBehaviour:
+  m_GameObject: {fileID: 100000}
+  m_Enabled: 1
+  m_Script: {fileID: 11500000, guid: f60718293a4b5c6d7e8f091011121306, type: 3}
+  bodyRenderer: {fileID: 100003}
+--- !u!114 &100018
+MonoBehaviour:
+  m_GameObject: {fileID: 100000}
+  m_Enabled: 1
+  m_Script: {fileID: 11500000, guid: f60718293a4b5c6d7e8f091011121309, type: 3}
+  networkInventory: {fileID: 100016}
+--- !u!114 &100019
+MonoBehaviour:
+  m_GameObject: {fileID: 100000}
+  m_Enabled: 1
+  m_Script: {fileID: 11500000, guid: f60718293a4b5c6d7e8f091011121314, type: 3}
+  networkInventory: {fileID: 100016}
+  interactor: {fileID: 100018}
 --- !u!1 &200000
 GameObject:
   m_ObjectHideFlags: 0

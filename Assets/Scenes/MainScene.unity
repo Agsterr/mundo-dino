@@ -204,6 +204,8 @@ GameObject:
   - component: {fileID: 5900012345678901236}
   - component: {fileID: 5900012345678901237}
   - component: {fileID: 5900012345678901238}
+  - component: {fileID: 5900012345678901239}
+  - component: {fileID: 5900012345678901240}
   m_Layer: 0
   m_Name: GameSystems
   m_TagString: Untagged
@@ -267,6 +269,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   spawnPosition: {x: 12, y: 1, z: 18}
   stats: {fileID: 11400000, guid: e5f6789012345678abcdef0507080910, type: 2}
+--- !u!114 &5900012345678901239
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_GameObject: {fileID: 5900012345678901234}
+  m_Enabled: 1
+  m_Script: {fileID: 11500000, guid: f60718293a4b5c6d7e8f091011121313, type: 3}
+--- !u!114 &5900012345678901240
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_GameObject: {fileID: 5900012345678901234}
+  m_Enabled: 1
+  m_Script: {fileID: 11500000, guid: f60718293a4b5c6d7e8f091011121304, type: 3}
 --- !u!1 &7000012345678901234
 GameObject:
   m_ObjectHideFlags: 0

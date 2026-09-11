@@ -1,3 +1,4 @@
+using OpenWorldDinoSurvival.Inventory;
 using OpenWorldDinoSurvival.Player;
 using OpenWorldDinoSurvival.UI;
 using Unity.Netcode;
@@ -24,6 +25,8 @@ namespace OpenWorldDinoSurvival.Multiplayer
         [SerializeField] private AudioListener audioListener;
         [SerializeField] private ThirdPersonCamera thirdPersonCamera;
         [SerializeField] private WeaponHUD weaponHud;
+        [SerializeField] private CraftingHUD craftingHud;
+        [SerializeField] private PlayerInteractor interactor;
 
         private void Reset()
         {
@@ -35,6 +38,8 @@ namespace OpenWorldDinoSurvival.Multiplayer
             audioListener = GetComponentInChildren<AudioListener>();
             thirdPersonCamera = GetComponentInChildren<ThirdPersonCamera>();
             weaponHud = GetComponent<WeaponHUD>();
+            craftingHud = GetComponent<CraftingHUD>();
+            interactor = GetComponent<PlayerInteractor>();
         }
 
         public override void OnNetworkSpawn()
@@ -79,6 +84,16 @@ namespace OpenWorldDinoSurvival.Multiplayer
             if (weaponHud != null)
             {
                 weaponHud.enabled = isOwner;
+            }
+
+            if (craftingHud != null)
+            {
+                craftingHud.enabled = isOwner;
+            }
+
+            if (interactor != null)
+            {
+                interactor.enabled = isOwner;
             }
 
             if (isOwner)

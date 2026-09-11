@@ -1,5 +1,7 @@
 using OpenWorldDinoSurvival.AI;
 using OpenWorldDinoSurvival.Dinosaurs;
+using OpenWorldDinoSurvival.Inventory;
+using OpenWorldDinoSurvival.Loot;
 using OpenWorldDinoSurvival.Systems;
 using UnityEngine;
 
@@ -47,6 +49,27 @@ namespace OpenWorldDinoSurvival.World
             raptor.AddComponent<Health>();
             VelociraptorAI ai = raptor.AddComponent<VelociraptorAI>();
             ai.Initialize(stats);
+
+            LootOnDeath loot = raptor.AddComponent<LootOnDeath>();
+            loot.SetDrops(new[]
+            {
+                new LootDropEntry
+                {
+                    itemId = ItemIds.DinoHide,
+                    amount = 4,
+                    chance = 1f,
+                    color = new Color(0.45f, 0.3f, 0.15f)
+                },
+                new LootDropEntry
+                {
+                    itemId = ItemIds.GunParts,
+                    amount = 2,
+                    chance = 0.7f,
+                    color = new Color(0.7f, 0.7f, 0.75f)
+                }
+            });
         }
     }
 }
+
+

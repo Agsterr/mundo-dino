@@ -13,6 +13,8 @@ namespace OpenWorldDinoSurvival.UI
         [SerializeField] private PlayerWeaponController weaponController;
         [SerializeField] private PlayerHealth playerHealth;
         [SerializeField] private NetworkPlayerHealth networkPlayerHealth;
+        [SerializeField] private PlayerArmor playerArmor;
+        [SerializeField] private NetworkPlayerInventory networkInventory;
 
         private Weapon _trackedWeapon;
         private GUIStyle _labelStyle;
@@ -24,6 +26,8 @@ namespace OpenWorldDinoSurvival.UI
             weaponController ??= GetComponent<PlayerWeaponController>();
             networkPlayerHealth ??= GetComponent<NetworkPlayerHealth>();
             playerHealth ??= GetComponent<PlayerHealth>();
+            playerArmor ??= GetComponent<PlayerArmor>();
+            networkInventory ??= GetComponent<NetworkPlayerInventory>();
 
             weaponController ??= FindFirstObjectByType<PlayerWeaponController>();
             playerHealth ??= FindFirstObjectByType<PlayerHealth>();
@@ -111,7 +115,25 @@ namespace OpenWorldDinoSurvival.UI
                 GUI.Label(new Rect(16, 44, 400, 28), lifeText, _healthStyle);
             }
 
+            DrawArmorInfo();
             DrawCrosshair();
+        }
+
+        private void DrawArmorInfo()
+        {
+            string armorText = "Armadura: nenhuma";
+            if (networkInventory != null && networkInventory.ArmorTier > 0)
+            {
+                armorText = networkInventory.ArmorTier == 1
+                    ? "Armadura: Colete de Couro"
+                    : "Armadura: Placas de Metal";
+            }
+            else if (playerArmor != null && playerArmor.EquippedArmor != null)
+            {
+                armorText = $"Armadura: {playerArmor.EquippedArmor.armorName}";
+            }
+
+            GUI.Label(new Rect(16, 72, 400, 24), armorText, _healthStyle);
         }
 
         private void DrawCrosshair()

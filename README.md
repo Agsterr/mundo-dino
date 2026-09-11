@@ -4,13 +4,12 @@ Jogo 3D multiplayer de sobrevivência em mundo aberto com dinossauros, PvP e coo
 
 **Stack:** Unity 2022.3 LTS · C# · Input System · Netcode for GameObjects
 
-## Milestone atual: 4 — Multiplayer PvP local
+## Milestone atual: 4 + Crafting (M7 parcial)
 
-- [x] Milestones 1, 2 e 3
-- [x] 2 jogadores (Host + Client em localhost)
-- [x] Dano server-side (tiros e vida autoritativos no servidor)
-- [x] Munição e recarga validados no servidor
-- [x] Velociraptor continua funcionando no Host
+- [x] Milestones 1, 2, 3 e 4
+- [x] Coleta de materiais (E) e drops de inimigos
+- [x] Crafting de armas e armaduras (Tab)
+- [x] Inventário autoritativo no servidor (multiplayer)
 
 ## Pré-requisitos
 
@@ -28,6 +27,22 @@ git clone https://github.com/Agsterr/mundo-dino.git
 3. Abra com **Unity 2022.3 LTS**
 4. Abra a cena `Assets/Scenes/MainScene.unity`
 5. Pressione **Play** → escolha **Host** ou **Client**
+
+### Crafting — materiais, armas e armaduras
+
+**Materiais:**
+- **Sucata de metal** — alvos vermelhos, nós de sucata no mapa
+- **Couro de dino** — mate o Velociraptor
+- **Fibra** — colete dos arbustos verdes
+- **Peças de arma** — alvos e raptor (drop parcial)
+
+**Receitas (Tab → clique):**
+| Item | Materiais |
+|------|-----------|
+| Pistola Reforçada | 5 sucata + 2 peças |
+| Rifle de Caça | 8 sucata + 3 couro + 3 peças |
+| Colete de Couro | 4 couro + 2 fibra |
+| Armadura de Placas | 10 sucata + 5 couro |
 
 ### Testar multiplayer (Milestone 4)
 
@@ -49,6 +64,8 @@ git clone https://github.com/Agsterr/mundo-dino.git
 | Recarregar | R |
 | Pistola | 1 |
 | Rifle | 2 |
+| Coletar loot / recurso | E |
+| Menu de crafting | Tab |
 
 ## Testar Velociraptor (Milestone 3)
 

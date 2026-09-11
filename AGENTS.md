@@ -8,7 +8,7 @@ Desenvolver em **pequenas entregas jogáveis**. Nunca implementar sistemas futur
 
 ## Milestone ativa
 
-**Milestone 4** — Multiplayer local PvP com dano server-side.
+**Milestone 4 + Crafting** — Multiplayer PvP + coleta/crafting de armas e armaduras.
 
 Próximo: Milestone 5 (grupos de até 4 jogadores).
 
@@ -32,8 +32,8 @@ Assets/Scripts/
 ├── UI/           WeaponHUD (munição, vida, mira)
 ├── World/        TrainingRangeSetup, DinosaurSpawner
 ├── Multiplayer/  NetworkPlayerSetup, NetworkPlayerHealth, NetworkPlayerCombat, ConnectionUI
-├── Inventory/    (Milestone 7)
-└── Loot/         (Milestone 6)
+├── Inventory/    ItemIds, PlayerInventory, NetworkPlayerInventory, PlayerCrafting, PlayerArmor, CraftingRecipe
+└── Loot/         LootPickup, LootOnDeath, ResourceNode, ResourceNodeSpawner
 ```
 
 ## Como testar (Milestone 4)
