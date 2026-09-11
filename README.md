@@ -97,3 +97,19 @@ npm run tree        # mostra árvore do projeto
 ## Licença
 
 MIT — veja [LICENSE](LICENSE).
+
+## Publicar no GitHub
+
+O projeto já está com `git init` e commits prontos. Crie o repositório no GitHub e envie:
+
+```bash
+# Opção A — GitHub CLI (com sua conta autenticada)
+cd open-world-dino-survival
+./scripts/setup-github-repo.sh
+
+# Opção B — manual
+# 1. Crie um repo vazio em github.com/new → nome: open-world-dino-survival
+# 2. Execute:
+git remote add origin https://github.com/SEU_USUARIO/open-world-dino-survival.git
+git push -u origin main
+```
