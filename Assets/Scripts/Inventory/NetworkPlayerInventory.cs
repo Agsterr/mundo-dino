@@ -2,6 +2,7 @@ using System;
 using OpenWorldDinoSurvival.Loot;
 using OpenWorldDinoSurvival.Multiplayer;
 using OpenWorldDinoSurvival.Player;
+using OpenWorldDinoSurvival.Systems;
 using OpenWorldDinoSurvival.Weapons;
 using Unity.Netcode;
 using UnityEngine;
@@ -19,6 +20,8 @@ namespace OpenWorldDinoSurvival.Inventory
         private readonly NetworkVariable<int> _hide = new(0, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Server);
         private readonly NetworkVariable<int> _fiber = new(0, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Server);
         private readonly NetworkVariable<int> _gunParts = new(0, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Server);
+        private readonly NetworkVariable<int> _food = new(0, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Server);
+        private readonly NetworkVariable<int> _water = new(0, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Server);
         private readonly NetworkVariable<bool> _pistolUpgraded = new(false, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Server);
         private readonly NetworkVariable<bool> _rifleUpgraded = new(false, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Server);
         private readonly NetworkVariable<int> _armorTier = new(0, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Server);
@@ -27,6 +30,7 @@ namespace OpenWorldDinoSurvival.Inventory
         private ArmorStats _metalArmor;
         private WeaponStats _craftedPistol;
         private WeaponStats _craftedRifle;
+        private NetworkPlayerSurvival _survival;
 
         public event Action OnChanged;
 
@@ -38,6 +42,8 @@ namespace OpenWorldDinoSurvival.Inventory
                 ItemIds.DinoHide => _hide.Value,
                 ItemIds.Fiber => _fiber.Value,
                 ItemIds.GunParts => _gunParts.Value,
+                ItemIds.FoodRation => _food.Value,
+                ItemIds.WaterFlask => _water.Value,
                 _ => 0
             };
         }
@@ -53,6 +59,7 @@ namespace OpenWorldDinoSurvival.Inventory
             armor ??= GetComponent<PlayerArmor>();
             weaponController ??= GetComponent<PlayerWeaponController>();
             combat ??= GetComponent<NetworkPlayerCombat>();
+            _survival ??= GetComponent<NetworkPlayerSurvival>();
             _hideVest = Resources.Load<ArmorStats>("Armor/HideVest");
             _metalArmor = Resources.Load<ArmorStats>("Armor/MetalPlateArmor");
             _craftedPistol = Resources.Load<WeaponStats>("Weapons/CraftedPistolStats");
@@ -65,6 +72,8 @@ namespace OpenWorldDinoSurvival.Inventory
             _hide.OnValueChanged += NotifyChanged;
             _fiber.OnValueChanged += NotifyChanged;
             _gunParts.OnValueChanged += NotifyChanged;
+            _food.OnValueChanged += NotifyChanged;
+            _water.OnValueChanged += NotifyChanged;
             _pistolUpgraded.OnValueChanged += (_, __) => ApplyWeaponUpgrades();
             _rifleUpgraded.OnValueChanged += (_, __) => ApplyWeaponUpgrades();
             _armorTier.OnValueChanged += (_, __) => ApplyArmorVisual();
@@ -79,6 +88,8 @@ namespace OpenWorldDinoSurvival.Inventory
             _hide.OnValueChanged -= NotifyChanged;
             _fiber.OnValueChanged -= NotifyChanged;
             _gunParts.OnValueChanged -= NotifyChanged;
+            _food.OnValueChanged -= NotifyChanged;
+            _water.OnValueChanged -= NotifyChanged;
         }
 
         public void AddItem(int itemId, int amount)
@@ -94,6 +105,62 @@ namespace OpenWorldDinoSurvival.Inventory
                 case ItemIds.DinoHide: _hide.Value += amount; break;
                 case ItemIds.Fiber: _fiber.Value += amount; break;
                 case ItemIds.GunParts: _gunParts.Value += amount; break;
+                case ItemIds.FoodRation: _food.Value += amount; break;
+                case ItemIds.WaterFlask: _water.Value += amount; break;
+            }
+        }
+
+        [ServerRpc]
+        public void RequestConsumeItemServerRpc(int itemId, ServerRpcParams rpcParams = default)
+        {
+            if (rpcParams.Receive.SenderClientId != OwnerClientId || _survival == null)
+            {
+                return;
+            }
+
+            if (GetCount(itemId) <= 0)
+            {
+                return;
+            }
+
+            RemoveItemServer(itemId, 1);
+
+            if (itemId == ItemIds.FoodRation)
+            {
+                _survival.RestoreHunger(ItemIds.FoodRestoreAmount);
+            }
+            else if (itemId == ItemIds.WaterFlask)
+            {
+                _survival.RestoreThirst(ItemIds.WaterRestoreAmount);
+            }
+        }
+
+        public void TryConsumeItem(int itemId)
+        {
+            if (!IsOwner)
+            {
+                return;
+            }
+
+            if (NetworkManager.Singleton != null && NetworkManager.Singleton.IsListening)
+            {
+                RequestConsumeItemServerRpc(itemId);
+                return;
+            }
+
+            if (GetCount(itemId) <= 0 || _survival == null)
+            {
+                return;
+            }
+
+            RemoveItemServer(itemId, 1);
+            if (itemId == ItemIds.FoodRation)
+            {
+                _survival.RestoreHunger(ItemIds.FoodRestoreAmount);
+            }
+            else if (itemId == ItemIds.WaterFlask)
+            {
+                _survival.RestoreThirst(ItemIds.WaterRestoreAmount);
             }
         }
 
@@ -215,6 +282,10 @@ namespace OpenWorldDinoSurvival.Inventory
             {
                 _armorTier.Value = recipe.recipeId == "armor_hide" ? 1 : 2;
             }
+            else if (recipe.resultType == CraftResultType.Consumable)
+            {
+                AddItem(recipe.consumableItemId, recipe.consumableAmount);
+            }
         }
 
         private void RemoveItemServer(int itemId, int amount)
@@ -225,6 +296,8 @@ namespace OpenWorldDinoSurvival.Inventory
                 case ItemIds.DinoHide: _hide.Value = Mathf.Max(0, _hide.Value - amount); break;
                 case ItemIds.Fiber: _fiber.Value = Mathf.Max(0, _fiber.Value - amount); break;
                 case ItemIds.GunParts: _gunParts.Value = Mathf.Max(0, _gunParts.Value - amount); break;
+                case ItemIds.FoodRation: _food.Value = Mathf.Max(0, _food.Value - amount); break;
+                case ItemIds.WaterFlask: _water.Value = Mathf.Max(0, _water.Value - amount); break;
             }
         }
 
@@ -304,11 +377,15 @@ namespace OpenWorldDinoSurvival.Inventory
             DropStack(dropOrigin, ItemIds.DinoHide, _hide.Value);
             DropStack(dropOrigin, ItemIds.Fiber, _fiber.Value);
             DropStack(dropOrigin, ItemIds.GunParts, _gunParts.Value);
+            DropStack(dropOrigin, ItemIds.FoodRation, _food.Value);
+            DropStack(dropOrigin, ItemIds.WaterFlask, _water.Value);
 
             _scrap.Value = 0;
             _hide.Value = 0;
             _fiber.Value = 0;
             _gunParts.Value = 0;
+            _food.Value = 0;
+            _water.Value = 0;
             _pistolUpgraded.Value = false;
             _rifleUpgraded.Value = false;
             _armorTier.Value = 0;

@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_Script: {fileID: 11500000, guid: f60718293a4b5c6d7e8f091011121302, type: 3}
+  m_Name: Recipe_FoodRation
+  recipeId: food_ration
+  displayName: Ração de Comida
+  ingredients:
+  - itemId: 3
+    amount: 2
+  - itemId: 2
+    amount: 1
+  resultType: 2
+  weaponStats: {fileID: 0}
+  weaponSlot: 0
+  armorStats: {fileID: 0}
+  consumableItemId: 5
+  consumableAmount: 1

@@ -7,7 +7,8 @@ namespace OpenWorldDinoSurvival.Inventory
     public enum CraftResultType
     {
         WeaponUpgrade,
-        Armor
+        Armor,
+        Consumable
     }
 
     [Serializable]
@@ -27,5 +28,7 @@ namespace OpenWorldDinoSurvival.Inventory
         public WeaponStats weaponStats;
         public int weaponSlot;
         public ArmorStats armorStats;
+        public int consumableItemId;
+        public int consumableAmount = 1;
     }
 }

@@ -175,6 +175,24 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "ConsumeFood",
+                    "type": "Button",
+                    "id": "c1d2e3f4-a5b6-7890-4567-901234567801",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "ConsumeWater",
+                    "type": "Button",
+                    "id": "d2e3f4a5-b6c7-8901-5678-012345678912",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -428,6 +446,28 @@
                     "processors": "",
                     "groups": "Keyboard&Mouse",
                     "action": "Dominate",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "a9b0c1d2-e3f4-5678-2345-789012345680",
+                    "path": "<Keyboard>/h",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard&Mouse",
+                    "action": "ConsumeFood",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "b0c1d2e3-f4a5-6789-3456-890123456791",
+                    "path": "<Keyboard>/b",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard&Mouse",
+                    "action": "ConsumeWater",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

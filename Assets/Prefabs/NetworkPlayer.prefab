@@ -38,6 +38,8 @@ GameObject:
   - component: {fileID: 100029}
   - component: {fileID: 100030}
   - component: {fileID: 100031}
+  - component: {fileID: 100032}
+  - component: {fileID: 100033}
   m_Layer: 0
   m_Name: NetworkPlayer
   m_TagString: Player
@@ -115,6 +117,7 @@ MonoBehaviour:
   wings: {fileID: 100025}
   meleeCombat: {fileID: 100026}
   domination: {fileID: 100027}
+  networkInventory: {fileID: 100016}
 --- !u!114 &100007
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -317,6 +320,24 @@ MonoBehaviour:
         m_CallState: 2
     m_ActionId: b0c1d2e3-f4a5-6789-3456-890123456790
     m_ActionName: Player/Dominate
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 100006}
+        m_TargetAssemblyTypeName: OpenWorldDinoSurvival.Player.PlayerInputController, Assembly-CSharp
+        m_MethodName: OnConsumeFood
+        m_Mode: 0
+        m_CallState: 2
+    m_ActionId: c1d2e3f4-a5b6-7890-4567-901234567801
+    m_ActionName: Player/ConsumeFood
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 100006}
+        m_TargetAssemblyTypeName: OpenWorldDinoSurvival.Player.PlayerInputController, Assembly-CSharp
+        m_MethodName: OnConsumeWater
+        m_Mode: 0
+        m_CallState: 2
+    m_ActionId: d2e3f4a5-b6c7-8901-5678-012345678912
+    m_ActionName: Player/ConsumeWater
   m_DefaultActionMap: Player
 --- !u!114 &100010
 MonoBehaviour:
@@ -366,6 +387,7 @@ MonoBehaviour:
   voiceCallHud: {fileID: 100024}
   abilitiesHud: {fileID: 100029}
   regionHud: {fileID: 100031}
+  survivalHud: {fileID: 100033}
 --- !u!114 &100013
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -479,6 +501,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_Script: {fileID: 11500000, guid: c90718293a4b5c6d7e8f091011121904, type: 3}
   regionTracker: {fileID: 100030}
+--- !u!114 &100032
+MonoBehaviour:
+  m_GameObject: {fileID: 100000}
+  m_Enabled: 1
+  m_Script: {fileID: 11500000, guid: d90718293a4b5c6d7e8f091011121903, type: 3}
+--- !u!114 &100033
+MonoBehaviour:
+  m_GameObject: {fileID: 100000}
+  m_Enabled: 1
+  m_Script: {fileID: 11500000, guid: d90718293a4b5c6d7e8f091011121905, type: 3}
+  survival: {fileID: 100032}
+  inventory: {fileID: 100016}
 --- !u!1 &200000
 GameObject:
   m_ObjectHideFlags: 0

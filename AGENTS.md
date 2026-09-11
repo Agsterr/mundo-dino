@@ -8,9 +8,9 @@ Desenvolver em **pequenas entregas jogáveis**. Nunca implementar sistemas futur
 
 ## Milestone ativa
 
-**Milestone 6** — Mapa 2×2 km, 7 regiões, estruturas, loot espalhado, RegionHUD.
+**Milestone 7** — Fome/sede server-side, consumíveis, fontes de água, SurvivalHUD.
 
-Próximo: Milestone 7 (comida, água, sobrevivência completa).
+Próximo: Milestone 8 (progressão de equipamentos e regiões).
 
 ## Regras de código
 
@@ -28,8 +28,8 @@ Assets/Scripts/
 ├── Weapons/      WeaponStats, Weapon
 ├── Dinosaurs/    DinosaurStats, DinosaurMountable, DinosaurPlayerControl
 ├── AI/           VelociraptorAI (Idle→Patrol→Chase→Attack→Search→Return)
-├── Systems/      Health
-├── UI/           WeaponHUD, CraftingHUD, AbilitiesHUD, SessionHUD, RegionHUD
+├── Systems/      Health, NetworkPlayerSurvival
+├── UI/           WeaponHUD, CraftingHUD, AbilitiesHUD, SessionHUD, RegionHUD, SurvivalHUD
 ├── World/        OpenWorldGenerator, WorldRegions, RegionTracker, TrainingRangeSetup, DinosaurSpawner
 ├── Multiplayer/  NetworkPlayerSetup, NetworkPlayerHealth, NetworkPlayerCombat, ConnectionUI, PlayerSpawnPoints, NetworkSessionConfig
 ├── Inventory/    ItemIds, PlayerInventory, NetworkPlayerInventory, PlayerCrafting, PlayerArmor, CraftingRecipe

@@ -22,6 +22,7 @@ namespace OpenWorldDinoSurvival.Player
         [SerializeField] private PlayerWings wings;
         [SerializeField] private PlayerMeleeCombat meleeCombat;
         [SerializeField] private PlayerDinosaurDomination domination;
+        [SerializeField] private NetworkPlayerInventory networkInventory;
 
         private bool _sprintHeld;
         private Vector2 _lastMoveInput;
@@ -38,6 +39,7 @@ namespace OpenWorldDinoSurvival.Player
             wings = GetComponent<PlayerWings>();
             meleeCombat = GetComponent<PlayerMeleeCombat>();
             domination = GetComponent<PlayerDinosaurDomination>();
+            networkInventory = GetComponent<NetworkPlayerInventory>();
         }
 
         private void Awake()
@@ -49,6 +51,7 @@ namespace OpenWorldDinoSurvival.Player
             wings ??= GetComponent<PlayerWings>();
             meleeCombat ??= GetComponent<PlayerMeleeCombat>();
             domination ??= GetComponent<PlayerDinosaurDomination>();
+            networkInventory ??= GetComponent<NetworkPlayerInventory>();
         }
 
         public void OnMove(InputAction.CallbackContext context)
@@ -204,6 +207,22 @@ namespace OpenWorldDinoSurvival.Player
             if (context.performed && domination != null)
             {
                 domination.TryToggleDomination();
+            }
+        }
+
+        public void OnConsumeFood(InputAction.CallbackContext context)
+        {
+            if (context.performed && networkInventory != null)
+            {
+                networkInventory.TryConsumeItem(ItemIds.FoodRation);
+            }
+        }
+
+        public void OnConsumeWater(InputAction.CallbackContext context)
+        {
+            if (context.performed && networkInventory != null)
+            {
+                networkInventory.TryConsumeItem(ItemIds.WaterFlask);
             }
         }
     }

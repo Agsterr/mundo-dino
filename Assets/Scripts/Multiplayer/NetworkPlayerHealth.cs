@@ -1,6 +1,7 @@
 using System;
 using OpenWorldDinoSurvival.Inventory;
 using OpenWorldDinoSurvival.Player;
+using OpenWorldDinoSurvival.Systems;
 using Unity.Netcode;
 using UnityEngine;
 
@@ -29,6 +30,7 @@ namespace OpenWorldDinoSurvival.Multiplayer
         private NetworkPlayerInventory _inventory;
         private NetworkPlayerAbilities _abilities;
         private PlayerDinosaurDomination _domination;
+        private NetworkPlayerSurvival _survival;
 
         public float CurrentHealth => _networkHealth.Value;
         public float MaxHealth => maxHealth + (_inventory != null ? _inventory.HealthBonus : 0f);
@@ -48,6 +50,7 @@ namespace OpenWorldDinoSurvival.Multiplayer
             _inventory = GetComponent<NetworkPlayerInventory>();
             _abilities = GetComponent<NetworkPlayerAbilities>();
             _domination = GetComponent<PlayerDinosaurDomination>();
+            _survival = GetComponent<NetworkPlayerSurvival>();
         }
 
         public override void OnNetworkSpawn()
@@ -126,6 +129,7 @@ namespace OpenWorldDinoSurvival.Multiplayer
 
             transform.position = _spawnPosition;
             _networkHealth.Value = MaxHealth;
+            _survival?.ResetNeeds();
 
             if (_controller != null)
             {

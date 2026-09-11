@@ -36,6 +36,7 @@ namespace OpenWorldDinoSurvival.World
             BuildRiver();
             BuildRegionMarkers();
             BuildStructures();
+            SpawnWaterSources();
             SpawnResources();
             SpawnTrainingTargets();
             SpawnDinosaurs();
@@ -171,8 +172,40 @@ namespace OpenWorldDinoSurvival.World
             CreateBuilding("Lab_Fence", new Vector3(650f, 1f, 650f), new Vector3(40f, 2f, 1f), new Color(0.5f, 0.5f, 0.55f));
         }
 
+        private void SpawnWaterSources()
+        {
+            Vector3[] positions =
+            {
+                new Vector3(-350f, 0.2f, 0f),
+                new Vector3(350f, 0.2f, 0f),
+                new Vector3(0f, 0.2f, -35f),
+                new Vector3(0f, 0.2f, 35f),
+                new Vector3(-150f, 0.2f, 0f),
+                new Vector3(150f, 0.2f, 0f),
+            };
+
+            foreach (Vector3 position in positions)
+            {
+                GameObject source = GameObject.CreatePrimitive(PrimitiveType.Cylinder);
+                source.name = "WaterSource";
+                source.transform.SetParent(_worldRoot);
+                source.transform.position = position;
+                source.transform.localScale = new Vector3(3f, 0.25f, 3f);
+                source.AddComponent<WaterSource>();
+                SetColor(source, new Color(0.2f, 0.55f, 0.9f, 0.85f));
+            }
+        }
+
         private void SpawnResources()
         {
+            SpawnBerryBushes(new[]
+            {
+                new Vector3(-220f, 0.5f, 160f),
+                new Vector3(180f, 0.5f, 220f),
+                new Vector3(-500f, 0.5f, -120f),
+                new Vector3(420f, 0.5f, -480f),
+            });
+
             SpawnScrapNodes(new[]
             {
                 new Vector3(-450f, 0.5f, -300f),
@@ -267,6 +300,15 @@ namespace OpenWorldDinoSurvival.World
             {
                 CreateResourceNode("FiberBush", position, PrimitiveType.Cylinder, ItemIds.Fiber, 2,
                     new Color(0.2f, 0.7f, 0.25f));
+            }
+        }
+
+        private void SpawnBerryBushes(Vector3[] positions)
+        {
+            foreach (Vector3 position in positions)
+            {
+                CreateResourceNode("BerryBush", position, PrimitiveType.Sphere, ItemIds.FoodRation, 1,
+                    new Color(0.75f, 0.2f, 0.25f));
             }
         }
 

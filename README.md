@@ -4,14 +4,13 @@ Jogo 3D multiplayer de sobrevivência em mundo aberto com dinossauros, PvP e coo
 
 **Stack:** Unity 2022.3 LTS · C# · Input System · Netcode for GameObjects
 
-## Milestone atual: 6 — Mundo aberto 2×2 km
+## Milestone atual: 7 — Sobrevivência (fome e sede)
 
-- [x] Milestones 1–5
-- [x] Mapa **2 km × 2 km** com 7 regiões exploráveis
-- [x] Estruturas por região (vilarejo, porto, laboratório, etc.)
-- [x] Loot e recursos espalhados pelo mapa
-- [x] 5 Velociraptors em regiões diferentes
-- [x] HUD de região atual
+- [x] Milestones 1–6
+- [x] **Fome e sede** drenam com o tempo — morre se chegar a zero
+- [x] Beber no **rio** (E) ou usar **cantil** (B)
+- [x] Comer **ração** (H) — colete, crafte ou encontre arbustos de frutas
+- [x] Crafting: Ração de Comida e Cantil de Água (Tab)
 
 ## Pré-requisitos
 
@@ -59,6 +58,21 @@ git clone https://github.com/Agsterr/mundo-dino.git
 4. **C** novamente para encerrar
 
 > A voz usa microfone do PC e transmissão em tempo real entre os dois jogadores em chamada. Qualidade é de protótipo; para produção considere Vivox.
+
+### Sobrevivência — fome e sede (Milestone 7)
+
+Barras de **fome** e **sede** aparecem abaixo da região atual. Se qualquer uma chegar a **0**, você perde vida até comer ou beber.
+
+| Ação | Tecla |
+|------|-------|
+| Beber no rio | E (perto da água) |
+| Comer ração | H |
+| Beber cantil | B |
+
+**Obter comida/água:**
+- Arbustos vermelhos → frutas (ração) direto
+- Tab → craftar **Ração** (2 fibra + 1 couro) ou **Cantil** (1 fibra)
+- Rio → beber grátis (cooldown de 2 s)
 
 ### Explorar o mundo aberto (Milestone 6)
 
@@ -114,6 +128,8 @@ O HUD superior esquerdo mostra sua **região atual** conforme você explora.
 | Golpe pesado | Botão direito do mouse (ou Shift+Q) |
 | Esquiva | X |
 | Dominar / soltar dinossauro | G |
+| Comer ração | H |
+| Beber cantil | B |
 
 ### Asas, luta e dominação de dinossauros
 
@@ -179,7 +195,7 @@ O jogo é construído em milestones pequenas e jogáveis. **Não implemente sist
 | 4 | PvP (2 jogadores, dano server-side) ✅ |
 | 5 | Cooperação (grupo de 4) ✅ |
 | 6 | Mundo aberto (regiões, loot) ✅ |
-| 7 | Sobrevivência (inventário, crafting) |
+| 7 | Sobrevivência (fome, sede, consumíveis) ✅ |
 | 8 | Progressão |
 | 9 | Servidor persistente |
 

@@ -67,10 +67,13 @@ namespace OpenWorldDinoSurvival.UI
                 return;
             }
 
-            string hint = interactor.NearbyLoot != null
-                ? $"[E] Coletar {ItemIds.GetDisplayName(interactor.NearbyLoot.ItemId)}"
-                : "[E] Coletar recurso";
-            GUI.Label(new Rect(16, Screen.height - 48, 400, 24), hint, _hintStyle);
+            string hint = interactor.GetInteractHint();
+            if (string.IsNullOrEmpty(hint))
+            {
+                return;
+            }
+
+            GUI.Label(new Rect(16, Screen.height - 48, 500, 24), hint, _hintStyle);
         }
 
         private void DrawInventory(Rect area)
@@ -81,6 +84,8 @@ namespace OpenWorldDinoSurvival.UI
             DrawMaterialLine(ItemIds.DinoHide, ref lineY, area.x);
             DrawMaterialLine(ItemIds.Fiber, ref lineY, area.x);
             DrawMaterialLine(ItemIds.GunParts, ref lineY, area.x);
+            DrawMaterialLine(ItemIds.FoodRation, ref lineY, area.x);
+            DrawMaterialLine(ItemIds.WaterFlask, ref lineY, area.x);
         }
 
         private void DrawMaterialLine(int itemId, ref float y, float x)
