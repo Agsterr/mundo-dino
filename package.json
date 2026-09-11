@@ -1,0 +1,20 @@
+{
+  "name": "mundo-dino",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Mundo Dino - a full-stack dinosaur world app",
+  "workspaces": [
+    "server",
+    "client"
+  ],
+  "scripts": {
+    "dev:server": "npm run dev --workspace server",
+    "dev:client": "npm run dev --workspace client",
+    "build": "npm run build --workspace server && npm run build --workspace client",
+    "typecheck": "npm run typecheck --workspace server && npm run typecheck --workspace client",
+    "test": "npm run test --workspace server"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}
