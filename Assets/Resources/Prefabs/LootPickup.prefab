@@ -1,0 +1,52 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &300000
+GameObject:
+  m_ObjectHideFlags: 0
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 300001}
+  - component: {fileID: 300002}
+  - component: {fileID: 300003}
+  - component: {fileID: 300004}
+  - component: {fileID: 300005}
+  - component: {fileID: 300006}
+  m_Layer: 0
+  m_Name: LootPickup
+  m_TagString: Untagged
+--- !u!4 &300001
+Transform:
+  m_GameObject: {fileID: 300000}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 0.45, y: 0.45, z: 0.45}
+--- !u!33 &300002
+MeshFilter:
+  m_GameObject: {fileID: 300000}
+  m_Mesh: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!23 &300003
+MeshRenderer:
+  m_GameObject: {fileID: 300000}
+  m_Enabled: 1
+  m_Materials:
+  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+--- !u!135 &300004
+SphereCollider:
+  m_GameObject: {fileID: 300000}
+  m_IsTrigger: 1
+  m_Radius: 0.5
+--- !u!114 &300005
+MonoBehaviour:
+  m_GameObject: {fileID: 300000}
+  m_Enabled: 1
+  m_Script: {fileID: 11500000, guid: f60718293a4b5c6d7e8f091011121310, type: 3}
+  itemId: 1
+  amount: 1
+  pickupColor: {r: 0.9, g: 0.75, b: 0.2, a: 1}
+--- !u!114 &300006
+MonoBehaviour:
+  m_GameObject: {fileID: 300000}
+  m_Enabled: 1
+  m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c7d62f376, type: 3}
+  GlobalObjectIdHash: 1234567891
+  SpawnWithObservers: 1

@@ -8,9 +8,9 @@ Desenvolver em **pequenas entregas jogáveis**. Nunca implementar sistemas futur
 
 ## Milestone ativa
 
-**Milestone 3** — Velociraptor com IA básica.
+**Milestone 6** — Mapa 2×2 km, 7 regiões, estruturas, loot espalhado, RegionHUD.
 
-Próximo: Milestone 4 (multiplayer PvP, dano server-side).
+Próximo: Milestone 7 (comida, água, sobrevivência completa).
 
 ## Regras de código
 
@@ -24,27 +24,27 @@ Próximo: Milestone 4 (multiplayer PvP, dano server-side).
 
 ```
 Assets/Scripts/
-├── Player/       PlayerMovement, ThirdPersonCamera, PlayerWeaponController, PlayerHealth
+├── Player/       PlayerMovement, ThirdPersonCamera, PlayerWeaponController, PlayerWings, PlayerMeleeCombat, PlayerDinosaurDomination
 ├── Weapons/      WeaponStats, Weapon
-├── Dinosaurs/    DinosaurStats
+├── Dinosaurs/    DinosaurStats, DinosaurMountable, DinosaurPlayerControl
 ├── AI/           VelociraptorAI (Idle→Patrol→Chase→Attack→Search→Return)
 ├── Systems/      Health
-├── UI/           WeaponHUD (munição, vida, mira)
-├── World/        TrainingRangeSetup, DinosaurSpawner
-├── Multiplayer/  (Milestone 4+)
-├── Inventory/    (Milestone 7)
-└── Loot/         (Milestone 6)
+├── UI/           WeaponHUD, CraftingHUD, AbilitiesHUD, SessionHUD, RegionHUD
+├── World/        OpenWorldGenerator, WorldRegions, RegionTracker, TrainingRangeSetup, DinosaurSpawner
+├── Multiplayer/  NetworkPlayerSetup, NetworkPlayerHealth, NetworkPlayerCombat, ConnectionUI, PlayerSpawnPoints, NetworkSessionConfig
+├── Inventory/    ItemIds, PlayerInventory, NetworkPlayerInventory, PlayerCrafting, PlayerArmor, CraftingRecipe
+└── Loot/         LootPickup, LootOnDeath, ResourceNode, ResourceNodeSpawner
 ```
 
-## Como testar (Milestone 3)
+## Como testar (Milestone 5)
 
 1. Unity 2022.3 LTS → `Assets/Scenes/MainScene.unity` → Play
-2. Velociraptor spawna em `(12, 1, 18)` — patrulha a área
-3. Aproxime ou atire para alertá-lo
-4. Mate o raptor (150 HP) ou seja atacado (20 dano, respawn 3s)
-5. HUD mostra munição + vida do jogador
+2. Até 4 instâncias: **Host** na primeira, **Entrar** nas demais
+3. HUD superior direito lista jogadores conectados (0–3)
+4. Morte derruba materiais do inventário no chão
+5. 5º jogador é rejeitado (sessão cheia)
 
-> Dano é local até o Milestone 4 (multiplayer server-authoritative).
+> PvP usa Netcode for GameObjects. Cliente nunca aplica dano diretamente.
 
 ## Unity
 
