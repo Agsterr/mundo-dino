@@ -1,6 +1,3 @@
-<<<<<<< HEAD
-# mundo-dino
-=======
 # Open World Dino Survival
 
 Jogo 3D multiplayer de sobrevivência em mundo aberto com dinossauros, PvP e cooperação.
@@ -142,4 +139,3 @@ Se o GitHub pedir porque o repo já tem README:
 git pull origin main --allow-unrelated-histories
 git push -u origin main
 ```
->>>>>>> unity-src/cursor/unity-milestones-1-3-b85e
